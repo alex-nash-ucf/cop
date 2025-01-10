@@ -14,8 +14,7 @@ This is a full-stack application project for COP4331 Processes of Object Oriente
 Making file changes:
 <br/> https://www.youtube.com/watch?v=nlF-SOrod5o  
 <br/>More detailed video on Git collaboration:
-<br/>https://www.youtube.com/watch?v=ygqx50-JHEE 
-
+<br/>https://www.youtube.com/watch?v=ygqx50-JHEE
 ## **Cloning**
 Navigate to where you want to clone repo 
 <br/> *example with desktop:* 
@@ -52,8 +51,17 @@ git pull origin <branch-name>
 ```
 
 ## **Committing**
+Check status of commits (do this frequently)
+```bash
+git status
+```
+Add current working directory
 ```bash
 git add .
+```
+Add specific file
+```bash
+git add <file name here>
 ```
 Commit with a description/message 
 ```bash
