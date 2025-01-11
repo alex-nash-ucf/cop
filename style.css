@@ -2,14 +2,7 @@
     font-family:'Pokemon';
     src: url('fonts/PokemonFont.ttf') format('truetype');
 }
-@media (max-width: 1000px) {
-    #home .about, #home .login, #home .signup {
-        display: none; 
-    }
-    #home .hamburger-menu {
-        display: flex; 
-    }
-}
+
 
 body{
     margin: 0;
@@ -199,7 +192,7 @@ body{
     height:24px;
 }
 
-.text img, .text2 img, .text3 img {
+.text img, .text2 img {
     margin-right: -10px;
 }
 
@@ -311,4 +304,84 @@ body{
 .signupbox p{
     margin-top: 5px;
     font-size: 10px;
+}
+
+.about-section{
+    text-align: center;
+    padding: 2rem 1rem;
+    background-color: #ffffff;
+    margin: 1rem;
+    border-radius:8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+.about-section h1{
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+.about-section p{
+    line-height: 25px;
+}
+
+#aboutTeam{
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+#aboutTeam h2{
+    align-items: center;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom:5px;
+    margin-top:5px
+
+}
+
+
+
+.member p2{
+    font-size: 12px;
+    color:#333;
+}
+.photo-grid{
+    display: grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap: 1rem;
+
+}
+
+.aboutTeam{
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.member{
+    text-align: center;
+}
+
+.profile-pic{
+    margin-top:30px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px dashed black;
+}
+
+
+
+
+@media screen and (max-width: 1000px){
+    #home .about, #home .login, #home .signup{
+        display: none; 
+    }
+    #home .hamburger-menu{
+        display: flex; 
+    }
+    .photo-grid{
+        grid-template-columns:repeat(1, 1fr);
+    
+    }
 }
