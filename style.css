@@ -216,7 +216,6 @@ body{
     background-color: #F0F0F0;
     border: 2px dashed black;
     width: 460px;
-
     text-align: center;
     justify-content: center;
     
@@ -242,7 +241,6 @@ body{
     font-size: 17px;
     border-radius: 3px;
     border: 2px dashed black;
-
     
 }
 .text2 input{
@@ -269,4 +267,48 @@ body{
 
 .submitbtn:hover {
     background-color: black;
+}
+
+
+#signupz{
+    margin-top: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signupbox{
+    border-radius: 3px;
+    background-color: #F0F0F0;
+    border: 2px dashed black;
+    width: 460px;
+    height:320px;
+    text-align: center;
+    justify-content: center;
+    
+}
+
+.signupbox h1{
+    margin-top: 25px;
+    font-size: 25px;
+    text-align: center;
+
+}
+
+.text3 input{
+    margin-top: 15px;
+    font-size: 17px;
+    border-radius: 3px;
+    border: 2px dashed black;
+}
+
+.text4 input{
+    font-size: 17px;
+    border-radius: 3px;
+    border: 2px dashed black;
+}
+
+.signupbox p{
+    margin-top: 5px;
+    font-size: 10px;
 }
