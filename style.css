@@ -39,6 +39,8 @@ body{
     background-color: white;
     padding: 7px 10px;
     border: 2px dashed black;
+    border-radius: 3px;
+
 }
 .top-nav a:hover{
     text-decoration:none;
@@ -173,13 +175,98 @@ body{
     background-color: #EE1515;
     color: white;              
     padding: 12px 24px;  
+    font-family: Arial, Helvetica, sans-serif;
     border: none;             
+    text-decoration: none;
     border-radius: 8px;     
     font-size: 1.4rem;
+    text-align: center;
     cursor: pointer;             
     transition:background-color 0.3s ease-in-out; 
 }
 
 .register:hover {
+    background-color: black;
+}
+
+
+.passicon{
+    vertical-align:text-bottom;
+    height:22px;
+}
+.usericon{
+    vertical-align:text-bottom;
+    height:24px;
+}
+
+.text img, .text2 img {
+    margin-right: -10px;
+}
+
+
+#log{
+    margin-top: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginbox{
+    border-radius: 3px;
+    background-color: #F0F0F0;
+    border: 2px dashed black;
+    width: 460px;
+
+    text-align: center;
+    justify-content: center;
+    
+}
+
+.loginbox h1{
+    margin-top: 25px;
+    font-size: 25px;
+    text-align: center;
+
+}
+
+.loginbox p{
+    margin-top: 10px;
+    font-size: 10px;
+
+}
+.text{
+    margin-top: -10px;
+}
+
+.text input{
+    font-size: 17px;
+    border-radius: 3px;
+    border: 2px dashed black;
+
+    
+}
+.text2 input{
+    margin-top: 15px;
+    font-size: 17px;
+    border-radius: 3px;
+    border: 2px dashed black;
+
+    
+}
+
+.submitbtn{
+    background-color: #EE1515;
+    color: white;  
+    margin-top: 15px;    
+    margin-bottom:10px;        
+    padding: 10px 24px;  
+    border: none;             
+    border-radius: 10px;     
+    font-size: .9rem;
+    cursor: pointer;             
+    transition:background-color 0.3s ease-in-out; 
+}
+
+.submitbtn:hover {
     background-color: black;
 }
