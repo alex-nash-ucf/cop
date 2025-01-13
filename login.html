@@ -5,6 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="style.css"> 
+        <script type="text/javascript" src="js/code.js"></script>
+
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
         <title>Pokébook</title>
     </head>
@@ -49,24 +51,24 @@
                 <form action="">
                     <h1>Login</h1>
                     <div class="text">
-                        <img class="usericon" src="assets/person.png" alt="User Icon">
+                        <img class="usericon" id="loginName" src="assets/person.png" alt="User Icon">
                         <input required id="loginUser" type="text" placeholder="Username">
                     </div>
                     <div class="text2">
-                        <img class="passicon" src="assets/lock.png" alt="Lock Icon">
+                        <img class="passicon" id="loginPassword" src="assets/lock.png" alt="Lock Icon">
                         <input required id="loginPass" type="pass" placeholder="Password">
                     </div>
-                    <button type="submit" class="submitbtn">Login</button>
+                    <button type="submit" class="submitbtn" id="loginButton" onclick="doLogin()">Login</button>
                     <div class="registernow">
                         <p>New here? <a href="signup.html"> Register now</p>
                     </div>
+                    <span id="loginResult"></span>
                 </form>
             </div>
 
         </section>
 
         
-
         
 
         <script src="script.js"></script>
