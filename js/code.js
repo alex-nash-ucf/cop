@@ -10,6 +10,7 @@ function doLogin()
     //alert("Login pressed");
     //document.getElementById("loginResult").innerHTML = "Login pressed";
 
+
     userId= 0;
     firstName= "";
     lastName= "";
