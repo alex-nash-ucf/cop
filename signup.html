@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="style.css"> 
+        <script type="text/javascript" src="js/code.js"></script>
+
+        <link rel="icon" type="image/x-icon" href="assets/pokedex.png">
+        <title>Pokébook</title>
+    </head>
+
+    <body>
+        <section id="home">
+            <nav id="homenav">
+                <div class="top-nav">
+                    <a href="index.html">
+                        <img src="assets/pokebook.png" alt="Pokebook Logo" class="logo">
+                    </a>
+                    <div class="spacer"></div>
+                    <a href="about.html" class="about">About</a>
+                    <a href="login.html" class="login">Log In</a>
+                    <a href="signup.html"class="signup">Sign Up</a>
+                    
+                    <!--hamburger-->
+                    <div class="hamburger-menu">
+                        <div class="hamburger-icon" onclick="toggleMenu()">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="menu-links">
+                            <li><a href="about.html" onclick="toggleMenu()">About</a></li>
+                            <li><a href="login.html" onclick="toggleMenu()">Log In</a></li>
+                            <li><a href="signup.html" onclick="toggleMenu()">Sign Up</a></li>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="bline"></div>
+                <div class="circle"></div>
+    
+    
+            </nav>
+            
+
+        </section>
+        <section id="signupz">
+            <div class="signupbox">
+                <form action="">
+                    <h1>Sign Up</h1>
+                    <div class="text4">
+                        <input required id="firstN" type="text" placeholder="First Name">
+                    </div>
+                    <div class="text3">
+                        <input required id="lastN" type="text" placeholder="Last Name">
+                        
+                    </div>
+                    <div class="text3">
+                        <input required id="makeUser" type="text" placeholder="Username">
+                    </div>
+                    <div class="text3">
+                        <input required id="makePass" type="text" placeholder="Password">
+                    </div>
+            
+                    <button type="submit" class="submitbtn" id="signupButton" onclick="doSignup()">Sign Up</button>
+                    <div class="registernow">
+                        <p>Have an account? <a href="login.html"> Login here</p>
+                    </div>
+                
+                </form>
+            </div>
+
+        </section>
+
+        
+
+        <script src="script.js"></script>
+
+    </body>
+</html>
