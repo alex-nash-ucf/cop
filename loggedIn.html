@@ -46,27 +46,37 @@
             <div class="hello">
                 <h1>Welcome!
                 </h1>
+                <p>Search, add, delete, or edit your contacts!</p>
             </div>
 
             <div class="search-bar">
                 <input class="search-input" type="text" onkeyup=searchContacts() name="search" id="searchText" placeholder="Search..."/>
-
-                <button class="add-button">+</button>
-
+                <button class="add-button" id="toggleform"><img class= "addimg" src="assets/add.png" alt="Add" /></button>
+                
             </div>
 
-            <div class="addcontacts">
-                <form id="addMe" action="" method="post">
-                    <input id="contactFirst" type="text" placeholder="First Name" required>
-                    <input id="contactLast" type="text" placeholder="Last Name" required>
-                    <input id="contactNumber" type="text" placeholder="XXX-XXX-XXXX" required pattern="^[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4}$">
-                    <input id="contactEmail" type="text"placeholder="example@email.com" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required>
-                    <button id="addContactbtn" type="button" class="buttons font" onclick="addContact();"> Add</button>
-                    <button id="addContactbtn" type="button" class="buttons font" onclick="cancelContact();"> Cancel</button>
+            <div class="addcontacts" id="contact-form">
+                <div class="pfp">
+                    <img class= "pfpimg" src="assets/pfp.png" alt="pfp" />
+                    <div class="initial"></div>
+
+                </div>
+
+                <form class="addform" id="addMe" action="" method="post">
+                    <div class="inputrow">
+                        <input id="contactFirst" type="text" placeholder="First Name" required>
+                        <input id="contactLast" type="text" placeholder="Last Name" required>
+                    </div>
+                        <input id="contactEmail" type="text"placeholder="example@email.com" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required>
+                        <input id="contactNumber" type="text" placeholder="XXX-XXX-XXXX" required pattern="^[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4}$">
+                    </br>
+                    <button id="addContactbtn" type="button" class="addbut" onclick="addContact();"> Add</button>
+                    <button id="addContactbtn" type="button" class="cancelbut" onclick="cancelContact();"> Cancel</button>
                 </form>
                
             </div>
 
+            <div class="contacts-grid"></div>
 
 
         </section>

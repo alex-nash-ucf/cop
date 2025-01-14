@@ -14,3 +14,10 @@ function toggleMenu1(){
 
 }
 
+//toggle form visibility
+document.getElementById('toggleform').addEventListener('click', function (){
+    const contactForm= document.getElementById('contact-form');
+    contactForm.style.display=
+        contactForm.style.display=== 'none' || contactForm.style.display=== '' ? 'flex' : 'none';
+  });
+
