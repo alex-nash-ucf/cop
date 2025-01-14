@@ -1,5 +1,7 @@
 const { json } = require("react-router-dom");
 
+urlBase = "" // add later
+
 let userId= 0;
 let firstName= "";
 let lastName= "";
