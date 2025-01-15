@@ -388,19 +388,6 @@ body{
 }
 
 
-
-@media screen and (max-width: 1000px){
-    #home .about, #home .login, #home .signup{
-        display: none; 
-    }
-    #home .hamburger-menu{
-        display: flex; 
-    }
-    .photo-grid{
-        grid-template-columns:repeat(1, 1fr);
-    }
-}
-
 #loginResult{
     display: inline-block;
     font-size: 0.8em;
@@ -484,7 +471,15 @@ body{
     background-color: #d3d3d3;
     position: relative;
     width: 350px;
+    overflow: auto;
+}
 
+.addcontacts h3{
+    font-size:14px;
+}
+
+.addcontacts p{
+    font-size: 12px;
 }
 
 .initial{
@@ -522,6 +517,13 @@ body{
     gap: 10px;
 }
 
+.hello h1{
+    padding:10px;
+    margin-top:20px;
+    line-height: 2;
+    font-size:30px;
+}
+
 #contactFirst, #contactLast {
     box-sizing: border-box; 
     width:110px;
@@ -531,16 +533,33 @@ body{
 .contacts-grid{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
+    gap: 10px;
+    padding-right: 20px;
 }
 
-.contacts-card{
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 2px dashed #000;
-    border-radius: 5px;
-    background-color: #d3d3d3;
-    width: 350px;
+
+
+
+
+@media screen and (max-width: 1000px){
+    #home .about, #home .login, #home .signup{
+        display: none; 
+    }
+    #home .hamburger-menu{
+        display: flex; 
+    }
+    .photo-grid{
+        grid-template-columns:repeat(1, 1fr);
+    }
+    .contacts-grid{
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+}
+
+@media screen and (max-width: 800px){
+    .contacts-grid{
+        grid-template-columns: repeat(1, 1fr);
+    }
+    
 }
