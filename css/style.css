@@ -388,7 +388,7 @@ body{
 }
 
 
-#loginResult{
+#loginResult, #signupResult{
     display: inline-block;
     font-size: 0.8em;
     width: 90%;

@@ -1,3 +1,5 @@
+const { json } = require("react-router-dom");
+
 //const { json } = require("react-router-dom");
 const urlBase = "" // add later
 const extension= 'php'; 
@@ -57,6 +59,56 @@ function doLogin()
     }
 
 }
+
+function doSignup(){
+    firstName= document.getElementById("firstN").value;
+    lastName= document.getElementById("lastN").value;
+    userId= document.getElementById("makeUser").value;
+    password= document.getElementById("makePass").value;
+
+    if(!firstName || !lastName|| !username ||!password){
+        document.getElementById("signupResult").innerHTML= "All fields are required.";
+        return;
+    }
+
+    let tmp= {firstName: firstName,
+        lastName: lastName,
+        userId: userId,
+        password: password};
+
+        
+    let jsonPayload= JSON.stringify(tmp); 
+    let url=urlBase +'/Signup.'+ extension;
+
+    let xhr= new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset-UTF-8");
+
+    try{
+        xhr.onreadystatechange = function(){
+            if(this.status==409){
+                document.getElementById("signupResult").innerHTML= "Username already taken"
+                return;
+            }
+            if(this.readyState === 4 && this.status=== 200){
+                let jsonObject = JSON.parse(xhr.responseText);
+                userId=jsonObject.id;
+                firstName=jsonObject.firstName;
+                lastName= jsonObject.lastName;
+                document.getElementById("signupResult").innerHTML= "Signup successful! Please log in.";
+                saveCookies();
+
+            }
+        };
+
+        xhr.send(jsonPayload);
+    }catch(err){
+        document.getElementById("signupResult").innerHTML= err.message;
+    }
+
+}
+
+
 
 function formatPhoneNumber(phone){
     phone = phone.replace(/\D/g, ''); 
