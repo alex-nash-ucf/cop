@@ -14,8 +14,7 @@ function doLogin()
     //alert("Login pressed");
     //document.getElementById("loginResult").innerHTML = "Login pressed";
 
-    userId= 1;
-    console.log(userId);
+    userId= 0;
     firstName= "";
     lastName= "";
 
@@ -66,7 +65,7 @@ function doSignup(){
     userId= document.getElementById("makeUser").value;
     password= document.getElementById("makePass").value;
 
-    if(!firstName || !lastName|| !username ||!password){
+    if(!firstName || !lastName|| !userId ||!password){
         document.getElementById("signupResult").innerHTML= "All fields are required.";
         return;
     }
@@ -97,7 +96,6 @@ function doSignup(){
                 lastName= jsonObject.lastName;
                 document.getElementById("signupResult").innerHTML= "Signup successful! Please log in.";
                 saveCookies();
-
             }
         };
 
@@ -133,16 +131,18 @@ function validatePhoneNumber(phone){
     return phoneRegex.test(phone);
 }
 
+
+
 function addContact(){
 
-    const firstName= document.getElementById('contactFirst').value;
-    const lastName= document.getElementById('contactLast').value;
-    const email= document.getElementById('contactEmail').value;
-    const phone= document.getElementById('contactNumber').value;
+    let newFirstName= document.getElementById("contactFirst").value;
+    let newLastName= document.getElementById("contactLast").value;
+    let newEmail=document.getElementById('contactEmail').value;
+    let newPhone= document.getElementById('contactNumber').value;
 
-    const emailError= document.getElementById('emailError');
-    const phoneError= document.getElementById('phoneError');
-    const formError= document.getElementById('formError');
+    let emailError= document.getElementById('emailError');
+    let phoneError= document.getElementById('phoneError');
+    let formError= document.getElementById('formError');
 
     emailError.textContent = "";
     phoneError.textContent = "";
@@ -150,16 +150,16 @@ function addContact(){
 
     let isValid = true;
 
-    if(!firstName || !lastName || !email || !phone){
+    if(!newFirstName || !newLastName || !newEmail || !newPhone){
         formError.textContent = "Fill in all fields.";
         isValid = false;
     }
 
-    if(!validateEmail(email)){
+    if(!validateEmail(newEmail)){
         emailError.textContent = "Invalid email address.";
         isValid = false;
     }
-    if(!validatePhoneNumber(phone)){
+    if(!validatePhoneNumber(newPhone)){
         phoneError.textContent = "Invalid phone number.";
         isValid = false;
     }
@@ -168,63 +168,41 @@ function addContact(){
         return;
     }
 
-    const contactCard=document.createElement('div');
-    contactCard.classList.add('addcontacts');
+    let tmp={
+        firstName: newFirstName,
+        lastName: newLastName,
+        email: newEmail,
+        phone: newPhone
+    };
 
-    const pfpDiv= document.createElement('div');
-    pfpDiv.classList.add('pfp');
-    const pfpImg= document.createElement('img');
-    pfpImg.classList.add('pfpimg');
-    pfpImg.src ='images/pfp.png';
-    pfpImg.alt= 'Profile Picture';
+    let jsonPayload= JSON.stringify(tmp);
+    let url=urlBase +'/AddContacts.'+ extension;
 
-    const initialsDiv= document.createElement('div');
-    initialsDiv.classList.add('initial');
-    initialsDiv.textContent= `${firstName[0].toUpperCase()}${lastName[0].toUpperCase()}`;
+    let xhr= new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset-UTF-8");
 
-    pfpDiv.appendChild(pfpImg);
-    pfpDiv.appendChild(initialsDiv);
-
-    const contactDetails= document.createElement('div');
-
-    const formattedFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-    const formattedLastName = lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase();
-
-    contactDetails.innerHTML= `
-        <h3>${formattedFirstName} ${formattedLastName}</h3>
-        <p>${email}</p>
-        <p>${formatPhoneNumber(phone)}</p>
-    `;
-
-    //edit and delete
-    const buttonsDiv= document.createElement('div');
-    buttonsDiv.classList.add('buttons');
-
-    const editButton= document.createElement('button');
-    editButton.classList.add('edit-btn');
-    editButton.innerHTML= '<img src="images/edit.png" alt="edit" class="button-img" />'; 
-    editButton.addEventListener('click', () => editContact(contactCard));
-
-    const deleteButton =document.createElement('button');
-    deleteButton.classList.add('delete-btn');
-    deleteButton.innerHTML= '<img src="images/delete.png" alt="delete" class="button-img" />';
-    deleteButton.addEventListener('click', () => deleteContact(contactCard));
-
-    buttonsDiv.appendChild(editButton);
-    buttonsDiv.appendChild(deleteButton);
-
-    contactCard.appendChild(pfpDiv);
-    contactCard.appendChild(contactDetails);
-    contactCard.appendChild(buttonsDiv);
-
-    document.querySelector('.contacts-grid').appendChild(contactCard);
+    try{
+        xhr.onreadystatechange= function(){
+            if(this.readyState === 4 && this.status=== 200){
+                document.getElementById('addMe').reset();
+                loadContact();
+            }
+        };
+        xhr.send(jsonPayload);
+    }catch(err){
+        document.getElementById().innerHTML=err.message;
+    }
 
     document.getElementById('contact-form').style.display = 'none';
-    document.getElementById('addMe').reset();
 
     emailError.textContent= "";
     phoneError.textContent= "";
     formError.textContent= "";
+}
+
+
+function loadContact(){
 
 }
 
@@ -242,10 +220,14 @@ function deleteContact(){
     }
 }
 
-function editContact(){
+function editContact(editButton) {
+    editButton.style.display = "none";
+    const saveButton = editButton.parentNode.querySelector('.save-btn');
+    saveButton.style.display = "inline";
     
 
 }
+
 
 //cookies!
 
