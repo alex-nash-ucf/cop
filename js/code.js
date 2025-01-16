@@ -109,7 +109,7 @@ function addContact(){
     pfpDiv.classList.add('pfp');
     const pfpImg= document.createElement('img');
     pfpImg.classList.add('pfpimg');
-    pfpImg.src ='assets/pfp.png';
+    pfpImg.src ='images/pfp.png';
     pfpImg.alt= 'Profile Picture';
 
     const initialsDiv= document.createElement('div');
