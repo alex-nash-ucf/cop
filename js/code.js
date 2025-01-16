@@ -12,7 +12,6 @@ function doLogin()
     //alert("Login pressed");
     //document.getElementById("loginResult").innerHTML = "Login pressed";
 
-
     userId= 0;
     firstName= "";
     lastName= "";
@@ -56,7 +55,6 @@ function doLogin()
 
     }
 
-
 }
 
 function formatPhoneNumber(phone){
@@ -67,6 +65,20 @@ function formatPhoneNumber(phone){
     return phone;
 }
 
+function validateEmail(email){
+    const ret = String(email)
+        .toLowerCase()
+        .match(
+            /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+    return Boolean(ret);
+}
+
+function validatePhoneNumber(phone){
+    const phoneRegex = /^(\+?\d{1,4}[-.\s]?)?(\(?\d{3}\)?[-.\s]?)?\d{3}[-.\s]?\d{4}$/;
+
+    return phoneRegex.test(phone);
+}
 
 function addContact(){
 
@@ -76,9 +88,19 @@ function addContact(){
     const phone= document.getElementById('contactNumber').value;
 
     if (!firstName || !lastName || !email || !phone){
-        alert('Please fill in all fields.');
+        formError.textContent = "Fill in all fields.";
         return;
     }
+
+    if (!validateEmail(email)){
+        emailError.textContent = "Invalid email address.";
+        return;
+    }
+    if (!validatePhoneNumber(phone)){
+        phoneError.textContent = "Invalid phone number.";
+        return;
+    }
+
 
     const contactCard=document.createElement('div');
     contactCard.classList.add('addcontacts');
@@ -87,7 +109,7 @@ function addContact(){
     pfpDiv.classList.add('pfp');
     const pfpImg= document.createElement('img');
     pfpImg.classList.add('pfpimg');
-    pfpImg.src ='assets/pfp.png';
+    pfpImg.src ='images/pfp.png';
     pfpImg.alt= 'Profile Picture';
 
     const initialsDiv= document.createElement('div');
@@ -111,6 +133,11 @@ function addContact(){
 
     document.getElementById('contact-form').style.display = 'none';
     document.getElementById('addMe').reset();
+
+    emailError.textContent = "";
+    phoneError.textContent = "";
+    formError.textContent = "";
+
 
 }
 
