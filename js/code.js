@@ -46,7 +46,7 @@ function doLogin()
                 firstName= jsonObject.firstName;
                 lastName= jsonObject.lastName;
 
-                saveCookie();
+                saveCookies();
                 window.location=href="loggedIn.html";
             }
         };
@@ -203,6 +203,86 @@ function addContact(){
 
 
 function loadContact(){
+    let tmp= {
+        search: "",
+        userId:userId
+    };
+    let jsonPayload= JSON.stringify(tmp);
+    let url=urlBase +'/searchContacts.'+ extension;
+
+    let xhr= new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset-UTF-8");
+    try{
+        xhr.onreadystatechange= function(){
+            if(this.readyState === 4 && this.status=== 200){
+                let jsonObject= JSON.parse(xhr.responseText);
+                for(let i=0;i<jsonObject.results.length;i++){
+                    const contactCard=document.createElement('div');
+                    contactCard.classList.add('addcontacts');
+
+                    const pfpDiv= document.createElement('div');
+                    pfpDiv.classList.add('pfp');
+                    const pfpImg= document.createElement('img');
+                    pfpImg.classList.add('pfpimg');
+                    pfpImg.src ='images/pfp.png';
+                    pfpImg.alt= 'Profile Picture';
+
+                    const initialsDiv= document.createElement('div');
+                    initialsDiv.classList.add('initial');
+                    initialsDiv.textContent= `${firstName[0].toUpperCase()}${lastName[0].toUpperCase()}`;
+
+                    pfpDiv.appendChild(pfpImg);
+                    pfpDiv.appendChild(initialsDiv);
+
+                    const contactDetails= document.createElement('div');
+
+                    const formattedFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+                    const formattedLastName = lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase();
+
+                    contactDetails.innerHTML= `
+                        <h3>${formattedFirstName} ${formattedLastName}</h3>
+                        <p>${email}</p>
+                        <p>${formatPhoneNumber(phone)}</p>
+                    `;
+
+                    //edit and delete
+                    const buttonsDiv= document.createElement('div');
+                    buttonsDiv.classList.add('buttons');
+
+                    const editButton= document.createElement('button');
+                    editButton.classList.add('edit-btn');
+                    editButton.innerHTML= '<img src="images/edit.png" alt="edit" class="button-img" />'; 
+                    editButton.addEventListener('click', () => editContact(editButton));
+
+                    const deleteButton =document.createElement('button');
+                    deleteButton.classList.add('delete-btn');
+                    deleteButton.innerHTML= '<img src="images/delete.png" alt="delete" class="button-img" />';
+                    deleteButton.addEventListener('click', () => deleteContact(contactCard));
+
+                    const saveButton = document.createElement("button");
+                    saveButton.classList.add("save-btn");
+                    saveButton.innerHTML = '<img src="images/save.png" alt="save" class="button-img" />';
+                    saveButton.style.display = "none"; // Initially hidden
+                    saveButton.addEventListener("click", () => saveEditedContact(contactCard, contactDetails, editButton, saveButton));
+                    
+                    buttonsDiv.appendChild(saveButton);
+                    buttonsDiv.appendChild(editButton);
+                    buttonsDiv.appendChild(deleteButton);
+
+                    contactCard.appendChild(pfpDiv);
+                    contactCard.appendChild(contactDetails);
+                    contactCard.appendChild(buttonsDiv);
+                
+                    document.querySelector('.contacts-grid').appendChild(contactCard);
+
+                }
+            }
+        };
+        xhr.send(jsonPayload);
+    }catch(err){
+        document.getElementById().innerHTML=err.message;
+    }
 
 }
 
@@ -218,6 +298,7 @@ function deleteContact(){
     if(confirm('Are you sure you want to delete this contact?')){
         contactCard.remove();
     }
+
 }
 
 function editContact(editButton) {
@@ -228,6 +309,49 @@ function editContact(editButton) {
 
 }
 
+function search(){
+    let srch = document.getElementById("searchText").value;
+	document.getElementById("contactSearchResult").innerHTML = "";
+	
+	let contactList = "";
+
+	let tmp = {search:srch,userId:userId};
+	let jsonPayload = JSON.stringify( tmp );
+
+	let url = urlBase + '/SearchContacts.' + extension;
+	
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	try
+	{
+		xhr.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				document.getElementById("contactSearchResult").innerHTML = "Contact(s) has been retrieved";
+				let jsonObject = JSON.parse( xhr.responseText );
+				
+				for( let i=0; i<jsonObject.results.length; i++ )
+				{
+					contactList += jsonObject.results[i];
+					if( i < jsonObject.results.length - 1 )
+					{
+						contactList += "<br />\r\n";
+					}
+				}
+				
+				document.getElementsByTagName("p")[0].innerHTML = contactList;
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		document.getElementById("contactSearchResult").innerHTML = err.message;
+	}
+	
+}
 
 //cookies!
 
