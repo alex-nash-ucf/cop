@@ -564,8 +564,38 @@ body{
     
 }
 
-.error-message {
+.error-message{
     color: red;
     font-size: 10px;
     margin-left: 10px;
+}
+
+.button-img{
+    width: 17px;
+    height: 17px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+}
+
+
+
+.buttons{
+    position: absolute;     
+    top: 10px;             
+    right: 13px;         
+    display: flex;
+    gap: 5px;       
+}
+
+.edit-btn, .delete-btn{
+    border:1px dashed black;
+    border-radius: 5px;
+}
+
+.addbut, .cancelbut{
+    border:1px dashed black;
+    border-radius: 5px;
+    cursor: pointer;
 }

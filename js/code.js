@@ -1,6 +1,6 @@
-const { json } = require("react-router-dom");
-
-urlBase = "" // add later
+//const { json } = require("react-router-dom");
+const urlBase = "" // add later
+const extension= 'php'; 
 
 let userId= 0;
 let firstName= "";
@@ -12,17 +12,18 @@ function doLogin()
     //alert("Login pressed");
     //document.getElementById("loginResult").innerHTML = "Login pressed";
 
-    userId= 0;
+    userId= 1;
+    console.log(userId);
     firstName= "";
     lastName= "";
 
     let login= document.getElementById("loginName").value;
     let password= document.getElementById("loginPassword").value;
 
-    var hash= md5(password);
+    //var hash= md5(password);
 
     document.getElementById("loginResult").innerHTML= "";
-    let tmp= {login:login, password:hash};
+    let tmp= {login:login, password:password};
 
     let jsonPayload= JSON.stringify(tmp); 
     let url=urlBase +'/Login.'+ extension;
@@ -143,17 +144,35 @@ function addContact(){
         <p>${formatPhoneNumber(phone)}</p>
     `;
 
+    //edit and delete
+    const buttonsDiv= document.createElement('div');
+    buttonsDiv.classList.add('buttons');
+
+    const editButton= document.createElement('button');
+    editButton.classList.add('edit-btn');
+    editButton.innerHTML= '<img src="images/edit.png" alt="edit" class="button-img" />'; 
+    editButton.addEventListener('click', () => editContact(contactCard));
+
+    const deleteButton =document.createElement('button');
+    deleteButton.classList.add('delete-btn');
+    deleteButton.innerHTML= '<img src="images/delete.png" alt="delete" class="button-img" />';
+    deleteButton.addEventListener('click', () => deleteContact(contactCard));
+
+    buttonsDiv.appendChild(editButton);
+    buttonsDiv.appendChild(deleteButton);
+
     contactCard.appendChild(pfpDiv);
     contactCard.appendChild(contactDetails);
+    contactCard.appendChild(buttonsDiv);
 
     document.querySelector('.contacts-grid').appendChild(contactCard);
 
     document.getElementById('contact-form').style.display = 'none';
     document.getElementById('addMe').reset();
 
-    emailError.textContent = "";
-    phoneError.textContent = "";
-    formError.textContent = "";
+    emailError.textContent= "";
+    phoneError.textContent= "";
+    formError.textContent= "";
 
 }
 
@@ -163,6 +182,17 @@ function doLogout(){
     lastName= "";
     document.cookie= "firstName= ; expires= Thu, 01 Jan 1970 00:00:00 GMT";
     window.location.href= "index.html"; 
+}
+
+function deleteContact(){
+    if(confirm('Are you sure you want to delete this contact?')){
+        contactCard.remove();
+    }
+}
+
+function editContact(){
+    
+
 }
 
 //cookies!
