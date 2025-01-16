@@ -87,20 +87,33 @@ function addContact(){
     const email= document.getElementById('contactEmail').value;
     const phone= document.getElementById('contactNumber').value;
 
-    if (!firstName || !lastName || !email || !phone){
+    const emailError= document.getElementById('emailError');
+    const phoneError= document.getElementById('phoneError');
+    const formError= document.getElementById('formError');
+
+    emailError.textContent = "";
+    phoneError.textContent = "";
+    formError.textContent = "";
+
+    let isValid = true;
+
+    if(!firstName || !lastName || !email || !phone){
         formError.textContent = "Fill in all fields.";
-        return;
+        isValid = false;
     }
 
-    if (!validateEmail(email)){
+    if(!validateEmail(email)){
         emailError.textContent = "Invalid email address.";
-        return;
+        isValid = false;
     }
-    if (!validatePhoneNumber(phone)){
+    if(!validatePhoneNumber(phone)){
         phoneError.textContent = "Invalid phone number.";
-        return;
+        isValid = false;
     }
 
+    if(!isValid){
+        return;
+    }
 
     const contactCard=document.createElement('div');
     contactCard.classList.add('addcontacts');
@@ -120,8 +133,12 @@ function addContact(){
     pfpDiv.appendChild(initialsDiv);
 
     const contactDetails= document.createElement('div');
+
+    const formattedFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+    const formattedLastName = lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase();
+
     contactDetails.innerHTML= `
-        <h3>${firstName} ${lastName}</h3>
+        <h3>${formattedFirstName} ${formattedLastName}</h3>
         <p>${email}</p>
         <p>${formatPhoneNumber(phone)}</p>
     `;
@@ -137,7 +154,6 @@ function addContact(){
     emailError.textContent = "";
     phoneError.textContent = "";
     formError.textContent = "";
-
 
 }
 
