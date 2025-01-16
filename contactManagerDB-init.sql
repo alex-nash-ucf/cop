@@ -69,16 +69,16 @@ insert into Users (FirstName,LastName,Login,Password)
 insert into Users (FirstName,LastName,Login,Password) 
 	VALUES ('Alex','Nash','Alex','Lurantis');
 
-insert into Contacts (FirstName,LastName,Phone,Email) 
-	VALUES ('Lance','Nelson',1111111111,'email');
-insert into Contacts (FirstName,LastName,Phone,Email) 
-	VALUES ('Yama','Jiang',2222222222,'email');
-insert into Contacts (FirstName,LastName,Phone,Email) 
-	VALUES ('Lucas','Salinas',3333333333,'email');
-insert into Contacts (FirstName,LastName,Phone,Email)  
-	VALUES ('Nathan','Davis',4444444444,'test');
-insert into Contacts (FirstName,LastName,Phone,Email) 
-	VALUES ('Alex','Nash',5555555555,'email');
+insert into Contacts (FirstName,LastName,Phone,Email,UserID) 
+	VALUES ('Lance','Nelson',1111111111,'email',1);
+insert into Contacts (FirstName,LastName,Phone,Email,UserID) 
+	VALUES ('Yama','Jiang',2222222222,'email',2);
+insert into Contacts (FirstName,LastName,Phone,Email,UserID) 
+	VALUES ('Lucas','Salinas',3333333333,'email',3);
+insert into Contacts (FirstName,LastName,Phone,Email,UserID)  
+	VALUES ('Nathan','Davis',4444444444,'test',4);
+insert into Contacts (FirstName,LastName,Phone,Email,UserID) 
+	VALUES ('Alex','Nash',5555555555,'email',5);
 
 insert into Colors (Name,UserID) VALUES ('Blue',1);
 insert into Colors (Name,UserID) VALUES ('White',1);
