@@ -4,10 +4,10 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
         <script type="text/javascript" src="js/code.js"></script>
 
-        <link rel="icon" type="image/x-icon" href="assets/pokedex.png">
+        <link rel="icon" type="image/x-icon" href="images/pokedex.png">
 
         <title>Pokébook</title>
     </head>
@@ -17,7 +17,7 @@
             <nav id="homenav">
                 <div class="top-nav">
                     <a href="">
-                        <img src="assets/pokebook.png" alt="Pokebook Logo" class="logo">
+                        <img src="images/pokebook.png" alt="Pokebook Logo" class="logo">
                     </a>
                     <div class="spacer"></div>
                     <a href="index.html" class="login" id="logoutbtn" onclick="doLogout()" >Log Out</a>
@@ -52,13 +52,13 @@
 
             <div class="search-bar">
                 <input class="search-input" type="text" onkeyup=searchContacts() name="search" id="searchText" placeholder="Search..."/>
-                <button class="add-button" id="toggleform"><img class= "addimg" src="assets/add.png" alt="Add" /></button>
+                <button class="add-button" id="toggleform"><img class= "addimg" src="images/add.png" alt="Add" /></button>
                 
             </div>
 
             <div class="addcontacts" id="contact-form">
                 <div class="pfp">
-                    <img class= "pfpimg" src="assets/pfp.png" alt="pfp" />
+                    <img class= "pfpimg" src="images/pfp.png" alt="pfp" />
                     <div class="initial"></div>
 
                 </div>
@@ -69,10 +69,15 @@
                         <input id="contactLast" type="text" placeholder="Last Name" required>
                     </div>
                         <input id="contactEmail" type="text"placeholder="example@email.com" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required>
+                        <span id="emailError" class="error-message"></span>
                         <input id="contactNumber" type="text" placeholder="XXX-XXX-XXXX" required pattern="^[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4}$">
+                        <span id="phoneError" class="error-message"></span>
+
                     </br>
-                    <button id="addContactbtn" type="submit" class="addbut" onclick="addContact();"> Add</button>
+                    <button id="addContactbtn" type="button" class="addbut" onclick="addContact();"> Add</button>
                     <button id="addContactbtn" type="button" class="cancelbut" onclick="cancelContact();"> Cancel</button>
+                    <span id="formError" class="error-message"></span>
+
                 </form>
             </div>
             <div class="contacts-grid"></div>
@@ -83,7 +88,7 @@
         </section>
         
 
-        <script src="script.js"></script>
+        <script src="js/script.js"></script>
 
     </body>
 </html>
