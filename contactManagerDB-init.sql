@@ -31,7 +31,8 @@ CREATE TABLE `contactManagerDB`.`Contacts`
 	`Phone` VARCHAR(50) NOT NULL DEFAULT '' , 
 	`Email` VARCHAR(50) NOT NULL DEFAULT '' , 
 	`UserID` INT NOT NULL DEFAULT '0' , 
-	PRIMARY KEY (`ID`)
+	PRIMARY KEY (`ID`),
+	FOREIGN KEY (`UserID`) REFERENCES Users(`ID`)
 ) ENGINE = InnoDB;
 
 CREATE TABLE `contactManagerDB`.`Types`
@@ -54,7 +55,9 @@ CREATE TABLE `contactManagerDB`.`Pokemon`
     `SpAtk` INT ,
     `SpDef` INT ,
     `Speed` INT ,
-    PRIMARY KEY (`ID`) 
+    PRIMARY KEY (`ID`),
+    FOREIGN KEY (`Type1`) REFERENCES Types(`ID`),
+    FOREIGN KEY (`Type2`) REFERENCES Types(`ID`)
 ) ENGINE = InnoDB;
 
 -- Populate Database Tables
