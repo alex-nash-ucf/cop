@@ -13,10 +13,12 @@
 	else
 	{
 		// Can change if we are searching by only first name
-		$stmt = $conn->prepare("SELECT Name from Contacts where (FirstName like ? OR LastName like ?) AND UserID=?");
-		$contactName = "%" . $inData["search"] . "%";
-		$stmt->bind_param("ss", $contactName, $inData["userId"]);
-		$stmt->execute();
+        $stmt = $conn->prepare("SELECT FirstName, LastName from Contacts where (FirstName like ? OR LastName like ?) AND UserID=?");
+        $contactName = "%" . $inData["search"] . "%";
+        $userId = $inData["userId"];
+
+        $stmt->bind_param("sss", $contactName, $contactName, $userId);
+        $stmt->execute();
 		
 		$result = $stmt->get_result();
 		
