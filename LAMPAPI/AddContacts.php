@@ -7,14 +7,14 @@
 	$phone_number = $inData["phoneNumber"];
 	$userId = $inData["userId"];
 
-	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
+	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "contactmanagerdb");
 	if ($conn->connect_error) 
 	{
 		returnWithError( $conn->connect_error );
 	} 
 	else
 	{
-		$stmt = $conn->prepare("INSERT into Contacts (UserId, FirstName, LastName, Email, PhoneNumber) VALUES(?,?,?,?,?)");
+		$stmt = $conn->prepare("INSERT into Contacts (UserID, FirstName, LastName, Email, Phone) VALUES(?,?,?,?,?)");
 		$stmt->bind_param("issss", $userId, $first_name, $last_name, $email, $phone_number);
 		$stmt->execute();
 		$stmt->close();

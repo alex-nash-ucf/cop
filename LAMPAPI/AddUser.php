@@ -3,23 +3,23 @@
 	
 	$first_name = $inData["firstName"];
 	$last_name = $inData["lastName"];
-	$email = $inData["email"];
 	$username = $inData["username"];
 	$password = $inData["password"];
 
-	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
+	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "contactManagerDB");
 	if ($conn->connect_error) 
 	{
 		returnWithError( $conn->connect_error );
 	} 
 	else
 	{
-		$stmt = $conn->prepare("INSERT into Users (UserId, FirstName, LastName, Username, Password) VALUES(?,?,?,?,?)");
-		$stmt->bind_param("issss", $userId, $first_name, $last_name, $username, $password);
+        // DO NOT ADD ID, SQL TAKES CARE OF IT
+		$stmt = $conn->prepare("INSERT into Users (FirstName, LastName, Login, Password) VALUES(?,?,?,?)");
+        $stmt->bind_param("ssss", $first_name, $last_name, $username, $password);
+
 		$stmt->execute();
 		$stmt->close();
 		$conn->close();
-		returnWithError("");
 	}
 
 	function getRequestInfo()
