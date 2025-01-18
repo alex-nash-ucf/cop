@@ -5,7 +5,7 @@
 	$searchResults = "";
 	$searchCount = 0;
 
-	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
+	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "contactManagerDB");
 	if ($conn->connect_error) 
 	{
 		returnWithError( $conn->connect_error );
@@ -15,9 +15,9 @@
 		// Can change if we are searching by only first name
         $stmt = $conn->prepare("SELECT FirstName, LastName from Contacts where (FirstName like ? OR LastName like ?) AND UserID=?");
         $contactName = "%" . $inData["search"] . "%";
-        $userId = $inData["userId"];
+        $userID = $inData["userID"];
 
-        $stmt->bind_param("sss", $contactName, $contactName, $userId);
+        $stmt->bind_param("sss", $contactName, $contactName, $userID);
         $stmt->execute();
 		
 		$result = $stmt->get_result();
