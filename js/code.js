@@ -295,8 +295,30 @@ function doLogout(){
 }
 
 function deleteContact(){
-    if(confirm('Are you sure you want to delete this contact?')){
-        contactCard.remove();
+
+    let tmp={
+        userId: userId, deleteContactId: contactId
+    }        
+
+    let jsonPayload= JSON.stringify(tmp);
+
+    let url= urlBase + '/DeleteContacts.'+ extension;
+
+    let xhr= new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    try{
+        xhr.onreadystatechange= function(){
+            if (this.readyState == 4 && this.status == 200){
+                loadContact();
+            }
+
+        };
+        xhr.send(jsonPayload);
+
+    }catch(err){
+        console.log(err.message);
     }
 
 }
@@ -305,6 +327,9 @@ function editContact(editButton) {
     editButton.style.display = "none";
     const saveButton = editButton.parentNode.querySelector('.save-btn');
     saveButton.style.display = "inline";
+
+
+
     
 
 }
