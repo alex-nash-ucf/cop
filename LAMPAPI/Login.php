@@ -3,11 +3,10 @@
 
 	$inData = getRequestInfo();
 	
-	$id = $inData["id"];
-	$first_name = $inData["firstName"];
-	$last_name = $inData["lastName"];
+	$login = $inData["login"];
+	$password = $inData["password"];
 
-	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
+	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "contactManagerDB");
 
 	if( $conn->connect_error ) // CONNECTION UNSUCCESSFUL 
 	{
