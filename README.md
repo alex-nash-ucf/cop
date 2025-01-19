@@ -6,7 +6,7 @@ This is a full-stack application project for COP4331 Processes of Object Oriente
 ## **Group Members & Roles:**
 - Nathan Davis: API
 - Yama Jiang: Frontend
-- Alex Nash: Project Manager
+- Alex Nash: Project Manager!
 - Lucas Salinas: API
 - Lance Nelson: Database
 
