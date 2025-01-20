@@ -323,16 +323,33 @@ function deleteContact(){
 
 }
 
-function editContact(editButton) {
+function editContact(contactId) {
     editButton.style.display = "none";
     const saveButton = editButton.parentNode.querySelector('.save-btn');
     saveButton.style.display = "inline";
 
+    var cfirstName= document.getElementById("contactFirst");
+    var clastName= document.getElementById("contactLast");
+    var cemail= document.getElementById("contactEmail");
+    var cnum= document.getElementById("contactNumber");
+
+    var firstNameData= firstNameEl.innerText;
+    var lastNameData= lastNameEl.innerText;
+    var emailData= emailEl.innerText;
+    var phoneData= phoneEl.innerText;
 
 
-    
+    cfirstName.innerHTML= `<input type='text' id='firstNameInput${id}' value='${firstNameData}' class='edit-input'>`;
+    clastName.innerHTML= `<input type='text' id='lastNameInput${id}' value='${lastNameData}' class='edit-input'>`;
+    cemail.innerHTML= `<input type='text' id='emailInput${id}' value='${emailData}' class='edit-input'>`;
+    cnum.innerHTML= `<input type='text' id='phoneInput${id}' value='${phoneData}' class='edit-input'>`;
 
 }
+
+function saveContact(){
+    
+}
+
 
 function search(){
     let srch = document.getElementById("searchText").value;
