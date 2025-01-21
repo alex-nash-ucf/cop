@@ -1,5 +1,3 @@
-const { json } = require("react-router-dom");
-
 //const { json } = require("react-router-dom");
 const urlBase = "" // add later
 const extension= 'php'; 
@@ -208,7 +206,7 @@ function loadContact(){
         userId:userId
     };
     let jsonPayload= JSON.stringify(tmp);
-    let url=urlBase +'/SearchContacts.'+ extension;
+
 
     let xhr= new XMLHttpRequest();
     xhr.open("POST", url, true);
