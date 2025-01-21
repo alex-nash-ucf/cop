@@ -77,7 +77,7 @@ function doSignup(){
 
         
     let jsonPayload= JSON.stringify(tmp); 
-    let url=urlBase +'/Signup.'+ extension;
+    let url=urlBase +'/AddUser.'+ extension;
 
     let xhr= new XMLHttpRequest();
     xhr.open("POST", url, true);
@@ -208,7 +208,7 @@ function loadContact(){
         userId:userId
     };
     let jsonPayload= JSON.stringify(tmp);
-    let url=urlBase +'/searchContacts.'+ extension;
+    let url=urlBase +'/SearchContacts.'+ extension;
 
     let xhr= new XMLHttpRequest();
     xhr.open("POST", url, true);
