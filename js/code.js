@@ -347,8 +347,42 @@ function editContact(contactId) {
 }
 
 function saveContact(){
-    
+    var updatedFirstName= document.getElementById("firstNameInput").value;
+    var updatedLastName= document.getElementById("lastNameInput").value;
+    var updatedEmail= document.getElementById("emailInput").value;
+    var updatedPhone= document.getElementById("phoneInput").value;
+
+
+    let tmp={
+        phoneNum: updatedPhone,
+        newEmail: updatedEmail,
+        newFirst: updatedFirstName,
+        newLast: updatedLastName,
+        userId: userId
+    };
+
+    let jsonPayload= JSON.stringify(tmp);
+
+    let url= urlBase + '/saveContact.'+ extension;
+
+    let xhr= new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    try{
+        xhr.onreadystatechange= function(){
+            if (this.readyState == 4 && this.status == 200){
+                loadContact();
+            }
+        };
+        xhr.send(jsonPayload);
+
+    }catch(err){
+        console.log(err.message);
+    }
+
 }
+
 
 
 function search(){
