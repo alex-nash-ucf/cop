@@ -58,10 +58,11 @@ function doLogin()
 }
 
 function doSignup(){
-    firstName= document.getElementById("firstN").value;
-    lastName= document.getElementById("lastN").value;
-    userId= document.getElementById("makeUser").value;
-    password= document.getElementById("makePass").value;
+    
+    let firstName= document.getElementById("firstN").value;
+    let lastName= document.getElementById("lastN").value;
+    let userId= document.getElementById("makeUser").value;
+    let password= document.getElementById("makePass").value;
 
     if(!firstName || !lastName|| !userId ||!password){
         document.getElementById("signupResult").innerHTML= "All fields are required.";
