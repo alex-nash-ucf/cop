@@ -2,8 +2,8 @@
 
 	$inData = getRequestInfo();
 	
-	$searchResults = "";
-	$searchCount = 0;
+    $searchName = $inData["searchName"];
+	$searchCount = $inData["searchCount"];
 
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "contactManagerDB");
 	if ($conn->connect_error) 
@@ -12,12 +12,20 @@
 	} 
 	else
 	{
-		// Can change if we are searching by only first name
-        $stmt = $conn->prepare("SELECT * from Contacts where (FirstName like ? OR LastName like ?) AND UserID=?");
-        $contactName = "%" . $inData["search"] . "%";
-        $userID = $inData["userID"];
+        //LIMIT CONTACTS RECIEVED
+        $limit = isset($inData["limit"]) ? intval($inData["limit"]) : 10;
 
-        $stmt->bind_param("sss", $contactName, $contactName, $userID);
+
+        $contactName = "%" . $searchName . "%"; // FOR FINDING SIMILAR NAMES
+
+        $stmt = $conn->prepare("
+            SELECT * FROM Contacts 
+            WHERE FirstName LIKE ? OR LastName LIKE ? 
+            ORDER BY FirstName ASC, LastName ASC 
+            LIMIT ?
+        ");
+
+        $stmt->bind_param("sss", $contactName, $contactName, $limit);
         $stmt->execute();
 		
 		$result = $stmt->get_result();
