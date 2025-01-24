@@ -13,13 +13,25 @@
 	} 
 	else
 	{
-        // DO NOT ADD ID, SQL TAKES CARE OF IT
-		$stmt = $conn->prepare("INSERT into Users (FirstName, LastName, Login, Password) VALUES(?,?,?,?)");
-        $stmt->bind_param("ssss", $first_name, $last_name, $username, $password);
+		$stmt = $conn->prepare("SELECT * FROM Users WHERE Login = ?");
+		$stmt->bind_param("s", $username);
+        $stmt->execute();
 
-		$stmt->execute();
-		$stmt->close();
-		$conn->close();
+		$result = $stmt->get_result();
+		$rows = mysqli_num_rows($result);
+		if ($rows == 0){
+			// DO NOT ADD ID, SQL TAKES CARE OF IT
+			$stmt = $conn->prepare("INSERT into Users (FirstName, LastName, Login, Password) VALUES(?,?,?,?)");
+			$stmt->bind_param("ssss", $first_name, $last_name, $username, $password);
+
+			$stmt->execute();
+			$stmt->close();
+			$conn->close();
+		} else
+		{
+			returnWithError("Username unavailable.");
+		}
+
 	}
 
 	function getRequestInfo()
