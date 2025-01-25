@@ -21,7 +21,6 @@ document.getElementById('toggleform').addEventListener('click', function (){
         contactForm.style.display=== 'none' || contactForm.style.display=== '' ? 'flex' : 'none';
   });
 
-
 function cancelContact(){
     document.getElementById('contact-form').style.display = 'none';
     document.getElementById('addMe').reset();

@@ -1,5 +1,5 @@
 //const { json } = require("react-router-dom");
-const urlBase = "" // add later
+const urlBase = 'http://pokebook.xyz'
 const extension= 'php'; 
 
 let userId= 0;
