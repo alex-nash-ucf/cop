@@ -12,6 +12,8 @@ function doLogin()
     //alert("Login pressed");
     //document.getElementById("loginResult").innerHTML = "Login pressed";
 
+    console.log("login clicked");
+
     userId= 0;
     firstName= "";
     lastName= "";
@@ -58,6 +60,8 @@ function doLogin()
 }
 
 function doSignup(){
+    console.log("signup clicked");
+
     
     let firstName= document.getElementById("firstN").value;
     let lastName= document.getElementById("lastN").value;
@@ -133,6 +137,9 @@ function validatePhoneNumber(phone){
 
 
 function addContact(){
+
+    console.log("add contact clicked");
+
 
     let newFirstName= document.getElementById("contactFirst").value;
     let newLastName= document.getElementById("contactLast").value;
@@ -294,6 +301,8 @@ function doLogout(){
 }
 
 function deleteContact(){
+    console.log("delete contact clicked");
+
 
     let tmp={
         userId: userId, deleteContactId: contactId
@@ -323,6 +332,8 @@ function deleteContact(){
 }
 
 function editContact(contactId) {
+    console.log("edit contact clicked");
+
     editButton.style.display = "none";
     const saveButton = editButton.parentNode.querySelector('.save-btn');
     saveButton.style.display = "inline";
@@ -346,6 +357,8 @@ function editContact(contactId) {
 }
 
 function saveContact(){
+    console.log("save contact clicked");
+
     var updatedFirstName= document.getElementById("firstNameInput").value;
     var updatedLastName= document.getElementById("lastNameInput").value;
     var updatedEmail= document.getElementById("emailInput").value;
@@ -385,6 +398,8 @@ function saveContact(){
 
 
 function search(){
+    console.log("search clicked");
+
     let srch = document.getElementById("searchText").value;
 	document.getElementById("contactSearchResult").innerHTML = "";
 	
@@ -431,6 +446,8 @@ function search(){
 //cookies!
 
 function saveCookies(){
+    console.log("cookies saved! yum");
+
     let minutes= 20;
     let date= new Date();
     date.setTime(date.getTime()+(minutes*60*1000));
