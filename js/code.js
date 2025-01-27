@@ -18,8 +18,11 @@ function doLogin()
     firstName= "";
     lastName= "";
 
-    let login= document.getElementById("loginName").value;
-    let password= document.getElementById("loginPassword").value;
+    let login= document.getElementById("loginUser").value;
+    let password= document.getElementById("loginPass").value;
+
+    console.log(login);    
+    console.log(password);    
 
     //var hash= md5(password);
 
@@ -60,25 +63,32 @@ function doLogin()
 }
 
 function doSignup(){
-    console.log("signup clicked");
 
+    console.log("signup clicked");
     
     let firstName= document.getElementById("firstN").value;
     let lastName= document.getElementById("lastN").value;
     let userId= document.getElementById("makeUser").value;
     let password= document.getElementById("makePass").value;
 
+    console.log(firstName);    
+    console.log(lastName);    
+    console.log(userId);    
+    console.log(password);    
+
     if(!firstName || !lastName|| !userId ||!password){
         document.getElementById("signupResult").innerHTML= "All fields are required.";
         return;
     }
 
-    let tmp= {firstName: firstName,
+    let tmp= {
+        firstName: firstName,
         lastName: lastName,
         userId: userId,
-        password: password};
+        password: password
+    };
+    
 
-        
     let jsonPayload= JSON.stringify(tmp); 
     let url=urlBase +'/AddUser.'+ extension;
 
@@ -99,6 +109,7 @@ function doSignup(){
                 lastName= jsonObject.lastName;
                 document.getElementById("signupResult").innerHTML= "Signup successful! Please log in.";
                 saveCookies();
+                console.log("signed up!");
             }
         };
 
