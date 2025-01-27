@@ -24,7 +24,7 @@ function doLogin()
     console.log(login);    
     console.log(password);    
 
-    //var hash= md5(password);
+    var hash= md5(password);
 
     document.getElementById("loginResult").innerHTML= "";
     let tmp= {login:login, password:password};
@@ -64,6 +64,7 @@ function doLogin()
 
 function doSignup(){
 
+    event.preventDefault()
     console.log("signup clicked");
     
     let firstName= document.getElementById("firstN").value;
@@ -90,6 +91,7 @@ function doSignup(){
     
 
     let jsonPayload= JSON.stringify(tmp); 
+
     let url=urlBase +'/AddUser.'+ extension;
 
     let xhr= new XMLHttpRequest();
