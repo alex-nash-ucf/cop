@@ -25,3 +25,4 @@ function cancelContact(){
     document.getElementById('contact-form').style.display = 'none';
     document.getElementById('addMe').reset();
   }
+

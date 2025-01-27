@@ -76,7 +76,7 @@ function doSignup(){
     let lastName= document.getElementById("lastN").value;
     let userId= document.getElementById("makeUser").value;
     let password= document.getElementById("makePass").value;
-
+    
     console.log(firstName);    
     console.log(lastName);    
     console.log(userId);    
@@ -136,6 +136,45 @@ function formatPhoneNumber(phone){
     }
     return phone;
 }
+
+
+function validatePass(password){
+    
+    const myInput = document.getElementById("makePass");
+    const length = document.getElementById("length");
+    const symbol = document.getElementById("symbol");
+    const passNum = document.getElementById("passNum");
+    const capital = document.getElementById("capital");
+
+    const upperCaseLetters= /[A-Z]/g;
+    if(password.match(upperCaseLetters)){
+        capital.classList.remove("invalid");
+        capital.classList.add("valid");
+    }else{
+        capital.classList.remove("valid");
+        capital.classList.add("invalid");
+    }
+
+    const numbers = /[0-9]/g;
+    if(password.match(numbers)){
+        number.classList.remove("invalid");
+        number.classList.add("valid");
+    }else{
+        number.classList.remove("valid");
+        number.classList.add("invalid");
+    }
+
+    if(password.length>=8){
+        length.classList.remove("invalid");
+        length.classList.add("valid");
+    }else{
+        length.classList.remove("valid");
+        length.classList.add("invalid");
+    }
+
+      
+}
+
 
 function validateEmail(email){
     const ret = String(email)

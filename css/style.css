@@ -67,6 +67,14 @@ body{
     border-radius: 50%;
 }
 
+.circle:hover{
+    background-image: url("/images/pikachu.jpg");
+    background-color: none;
+    background-size: cover;
+    background-position: center;
+
+
+}
 
 /*hamburger*/
 #hamburger-nav {
@@ -224,6 +232,7 @@ body{
     background-color: #F0F0F0;
     border: 2px dashed black;
     width: 460px;
+    height:auto;
     text-align: center;
     justify-content: center;
     
@@ -293,7 +302,7 @@ body{
     background-color: #F0F0F0;
     border: 2px dashed black;
     width: 460px;
-    height:350px;
+    height:auto;
     text-align: center;
     justify-content: center;
     
@@ -305,6 +314,37 @@ body{
     text-align: center;
 
 }
+
+#passwordReq{
+    display:none;
+    color:red;
+    position: relative;
+
+}
+#passwordReq p{
+    font-size: 9px;
+}
+
+.valid{
+    color: green;
+}
+  
+.valid:before{
+    position: relative;
+    left: -35px;
+    content: "&#10004;";
+}
+.invalid{
+    color: red;
+}
+  
+.invalid:before{
+    position: relative;
+    left: -35px;
+    content: "&#10006;";
+}
+
+
 
 .text3 input{
     margin-top: 15px;
