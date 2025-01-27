@@ -4,6 +4,7 @@
 	
     $searchName = $inData["searchName"];
 	$searchCount = $inData["searchCount"];
+	$userId = $inData["userId"];
 
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "contactManagerDB");
 	if ($conn->connect_error) 
@@ -20,12 +21,12 @@
 
         $stmt = $conn->prepare("
             SELECT * FROM Contacts 
-            WHERE (FirstName LIKE ? OR LastName LIKE ? OR Email LIKE ? OR Phone LIKE ?) 
+            WHERE (FirstName LIKE ? OR LastName LIKE ? OR Email LIKE ? OR Phone LIKE ? WHERE UserID = ?) 
             ORDER BY FirstName ASC, LastName ASC 
             LIMIT ?
         ");
 
-        $stmt->bind_param("sssss", $contactName, $contactName, $contactName, $contactName, $limit);
+        $stmt->bind_param("ssssis", $contactName, $contactName, $contactName, $contactName, $userId, $limit);
         $stmt->execute();
 		
 		$result = $stmt->get_result();
