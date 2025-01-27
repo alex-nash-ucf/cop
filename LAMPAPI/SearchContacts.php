@@ -21,7 +21,7 @@
 
         $stmt = $conn->prepare("
             SELECT * FROM Contacts 
-            WHERE (FirstName LIKE ? OR LastName LIKE ? OR Email LIKE ? OR Phone LIKE ? WHERE UserID = ?) 
+            WHERE (FirstName LIKE ? OR LastName LIKE ? OR Email LIKE ? OR Phone LIKE ?) AND UserID = ? 
             ORDER BY FirstName ASC, LastName ASC 
             LIMIT ?
         ");
