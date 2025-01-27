@@ -5,7 +5,7 @@
 	$newLast = $inData["lastName"];
 	$newEmail = $inData["email"];
 	$newPhone = $inData["phoneNumber"];
-	$userId = $inData["userId"];
+	$contactId = $inData["ID"];
 
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "contactmanagerdb");
 	if ($conn->connect_error) 
@@ -14,8 +14,8 @@
 	} 
 	else
 	{
-		$stmt = $conn->prepare("UPDATE Contacts SET FirstName = ?, LastName = ?, Email = ?, Phone = ? WHERE UserID=?");
-		$stmt->bind_param("ssssi", $newFirst, $newLast, $newEmail, $newPhone, $userId);
+		$stmt = $conn->prepare("UPDATE Contacts SET FirstName = ?, LastName = ?, Email = ?, Phone = ? WHERE ID=?");
+		$stmt->bind_param("ssssi", $newFirst, $newLast, $newEmail, $newPhone, $contactId);
 		$stmt->execute();
 		$stmt->close();
 		$conn->close();
