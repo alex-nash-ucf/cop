@@ -4,8 +4,8 @@
 	
     $searchName = $inData["searchName"];
 	$searchCount = $inData["searchCount"];
-	$userId = $inData["userId"];
-
+  $userId = $inData["userId"];
+  
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "contactManagerDB");
 	if ($conn->connect_error) 
 	{
