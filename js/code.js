@@ -163,6 +163,11 @@ function addContact(){
     let phoneError= document.getElementById('phoneError');
     let formError= document.getElementById('formError');
 
+    console.log("First Name:", newFirstName);
+    console.log("Last Name:", newLastName);
+    console.log("Email:", newEmail);
+    console.log("Phone:", newPhone);
+
     emailError.textContent = "";
     phoneError.textContent = "";
     formError.textContent = "";
@@ -222,6 +227,8 @@ function addContact(){
 
 
 function loadContact(){
+
+    console.log("loading contact");
     let tmp= {
         search: "",
         userId:userId
