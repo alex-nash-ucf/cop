@@ -11,7 +11,6 @@ function doLogin()
     //testing 
     //alert("Login pressed");
     //document.getElementById("loginResult").innerHTML = "Login pressed";
-
     console.log("login clicked");
 
     userId= 0;
@@ -27,6 +26,12 @@ function doLogin()
     var hash= md5(password);
 
     document.getElementById("loginResult").innerHTML= "";
+
+    if(!firstName || !lastName|| !userId ||!password){
+        document.getElementById("loginResult").innerHTML= "All fields are required.";
+        return;
+    }
+
     let tmp= {login:login, password:password};
 
     let jsonPayload= JSON.stringify(tmp); 
