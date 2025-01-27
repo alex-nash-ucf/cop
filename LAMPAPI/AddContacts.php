@@ -7,7 +7,7 @@
 	$phone_number = $inData["phoneNumber"];
 	$userId = $inData["userId"];
 
-	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "contactmanagerdb");
+	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "contactManagerDB");
 	if ($conn->connect_error) 
 	{
 		returnWithError( $conn->connect_error );
