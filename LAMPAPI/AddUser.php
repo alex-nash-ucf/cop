@@ -21,6 +21,7 @@
 		$rows = mysqli_num_rows($result);
 		if ($rows == 0){
 			// DO NOT ADD ID, SQL TAKES CARE OF IT
+      $stmt->close();
 			$stmt = $conn->prepare("INSERT into Users (FirstName, LastName, Login, Password) VALUES(?,?,?,?)");
 			$stmt->bind_param("ssss", $first_name, $last_name, $username, $password);
 
