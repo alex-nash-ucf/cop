@@ -64,7 +64,9 @@
                         <input required id="makeUser" type="text" placeholder="Username">
                     </div>
                     <div class="text3">
-                        <input required id="makePass" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" placeholder="Password">
+                        <input required id="makePass" 
+                        onfocus="showPasswordRequirements()" oninput="validatePass(this.value)"
+                        type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" placeholder="Password">
                     </div>
                     <button class="submitbtn" id="signupButton" onclick="doSignup(event)">Sign Up</button>
                     <p id="signupResult" class="feedback"></p>
@@ -72,10 +74,10 @@
 
                     <div id="passwordReq">
                         <p>Password must contain the following:</p>
-                        <p id="length" class="invalid">• Minimum 8 characters</p>
-                        <p id="symbol" class="invalid">• Contain at least one special character</p>
-                        <p id="passNum" class="invalid">• Contain at least one number </p>
-                        <p id="capital" class="invalid">• Contain at least one capital </p>
+                        <p id="length" class="invalid"> Minimum 8 characters</p>
+                        <p id="symbol" class="invalid"> Contain at least one special character</p>
+                        <p id="passNum" class="invalid"> Contain at least one number </p>
+                        <p id="capital" class="invalid"> Contain at least one capital </p>
                     </div>
 
                     <div><br></div>

@@ -146,6 +146,17 @@ function validatePass(password){
     const passNum = document.getElementById("passNum");
     const capital = document.getElementById("capital");
 
+    //special characters
+    const specialCharacters= /[!@#$%^&*(),.?":{}|<>]/g;
+    if(password.match(specialCharacters)){
+        symbol.classList.remove("invalid");
+        symbol.classList.add("valid");
+    }else{
+        symbol.classList.remove("valid");
+        symbol.classList.add("invalid");
+    }
+
+    //uppercase
     const upperCaseLetters= /[A-Z]/g;
     if(password.match(upperCaseLetters)){
         capital.classList.remove("invalid");
@@ -155,13 +166,14 @@ function validatePass(password){
         capital.classList.add("invalid");
     }
 
+    //numbers
     const numbers = /[0-9]/g;
     if(password.match(numbers)){
-        number.classList.remove("invalid");
-        number.classList.add("valid");
+        passNum.classList.remove("invalid");
+        passNum.classList.add("valid");
     }else{
-        number.classList.remove("valid");
-        number.classList.add("invalid");
+        passNum.classList.remove("valid");
+        passNum.classList.add("invalid");
     }
 
     if(password.length>=8){
@@ -175,6 +187,13 @@ function validatePass(password){
       
 }
 
+function showPasswordRequirements(){
+    document.getElementById('passwordReq').style.display= 'block';
+}
+
+function hidePasswordRequirements(){
+    document.getElementById('passwordReq').style.display= 'none';
+}
 
 function validateEmail(email){
     const ret = String(email)

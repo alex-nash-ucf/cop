@@ -332,7 +332,7 @@ body{
 .valid:before{
     position: relative;
     left: -35px;
-    content: "&#10004;";
+    content: url(/images/check20.png);
 }
 .invalid{
     color: red;
@@ -341,7 +341,7 @@ body{
 .invalid:before{
     position: relative;
     left: -35px;
-    content: "&#10006;";
+    content: url(/images/x20.png);
 }
 
 
