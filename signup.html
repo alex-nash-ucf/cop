@@ -68,7 +68,7 @@
                         onfocus="showPasswordRequirements()" oninput="validatePass(this.value)"
                         type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" placeholder="Password">
                     </div>
-                    <button class="submitbtn" id="signupButton" onclick="doSignup(event)">Sign Up</button>
+                    <button type="button" class="submitbtn" id="signupButton" onclick="doSignup(event)">Sign Up</button>
                     <p id="signupResult" class="feedback"></p>
                     <p id="passValid" class="feedback"></p>
 

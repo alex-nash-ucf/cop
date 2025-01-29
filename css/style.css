@@ -330,8 +330,8 @@ body{
 }
   
 .valid:before{
+    top:5px;
     position: relative;
-    left: -35px;
     content: url(/images/check20.png);
 }
 .invalid{
@@ -339,8 +339,8 @@ body{
 }
   
 .invalid:before{
+    top:5px;
     position: relative;
-    left: -35px;
     content: url(/images/x20.png);
 }
 

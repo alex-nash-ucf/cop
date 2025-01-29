@@ -1,5 +1,5 @@
 //const { json } = require("react-router-dom");
-const urlBase = 'http://pokebook.xyz'
+const urlBase = 'http://157.230.221.117/LAMPAPI'
 const extension= 'php'; 
 
 let userId= 0;
@@ -8,6 +8,7 @@ let lastName= "";
 
 function doLogin()
 {
+
     //testing 
     //alert("Login pressed");
     //document.getElementById("loginResult").innerHTML = "Login pressed";
@@ -24,10 +25,12 @@ function doLogin()
     console.log(password);    
 
     var hash= md5(password);
+    console.log(hash);    
+
 
     document.getElementById("loginResult").innerHTML= "";
 
-    if(!firstName || !lastName|| !userId ||!password){
+    if(!login ||!password){
         document.getElementById("loginResult").innerHTML= "All fields are required.";
         return;
     }
@@ -44,6 +47,7 @@ function doLogin()
     try{
         xhr.onreadystatechange= function(){
             if(this.readyState== 4 && this.status==200){
+                console.log(xhr.responseText); //log response
                 let jsonObject= JSON.parse(xhr.responseText);
                 userId=jsonObject.id;
 
@@ -55,12 +59,15 @@ function doLogin()
                 lastName= jsonObject.lastName;
 
                 saveCookies();
-                window.location=href="loggedIn.html";
+                console.log("log in successful");
+                window.location.href = "loggedIn.html";
             }
         };
         xhr.send(jsonPayload);
     }
     catch(err){
+        console.error(err);
+        console.log("error");
         document.getElementById("loginResult").innerHTML= err.message;
 
     }
@@ -68,21 +75,19 @@ function doLogin()
 }
 
 function doSignup(){
-
-    event.preventDefault()
     console.log("signup clicked");
     
     let firstName= document.getElementById("firstN").value;
     let lastName= document.getElementById("lastN").value;
-    let userId= document.getElementById("makeUser").value;
+    let username= document.getElementById("makeUser").value;
     let password= document.getElementById("makePass").value;
     
     console.log(firstName);    
     console.log(lastName);    
-    console.log(userId);    
+    console.log(username);    
     console.log(password);    
 
-    if(!firstName || !lastName|| !userId ||!password){
+    if(!firstName || !lastName|| !username ||!password){
         document.getElementById("signupResult").innerHTML= "All fields are required.";
         return;
     }
@@ -90,7 +95,7 @@ function doSignup(){
     let tmp= {
         firstName: firstName,
         lastName: lastName,
-        userId: userId,
+        username: username,
         password: password
     };
     
