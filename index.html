@@ -59,52 +59,6 @@
 
         <script src="js/script.js"></script>
 
-        <h1>Test document.cookie</h1>
-
-  <label>
-    Cookie Name:
-    <input type="text" id="cookieName" placeholder="Enter cookie name">
-  </label>
-
-  <label>
-    Cookie Value:
-    <input type="text" id="cookieValue" placeholder="Enter cookie value">
-  </label>
-
-  <button onclick="setCookie()">Set Cookie</button>
-  <button onclick="showCookies()">Show Cookies</button>
-  <button onclick="deleteCookie()">Delete Cookie</button>
-
-  <h2>Output:</h2>
-  <pre id="output"></pre>
-
-  <script>
-    function setCookie() {
-      const name = document.getElementById('cookieName').value;
-      const value = document.getElementById('cookieValue').value;
-      if (name && value) {
-        document.cookie = `${name}=${value}; path=/; SameSite=Lax;`;
-        document.getElementById('output').textContent = `Set cookie: ${name}=${value}`;
-      } else {
-        alert('Please enter both a name and a value!');
-      }
-    }
-
-    function showCookies() {
-      const cookies = document.cookie;
-      document.getElementById('output').textContent = `Cookies: ${cookies || 'No cookies set'}`;
-    }
-
-    function deleteCookie() {
-      const name = document.getElementById('cookieName').value;
-      if (name) {
-        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-        document.getElementById('output').textContent = `Deleted cookie: ${name}`;
-      } else {
-        alert('Please enter the name of the cookie to delete!');
-      }
-    }
-  </script>
 
     </body>
 </html>
