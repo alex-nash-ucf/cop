@@ -35,6 +35,16 @@ body{
     border-radius: 3px;
 
 }
+
+.hero {
+    display: block;
+    width: 100%; 
+    max-width: 100%; 
+    height: auto; 
+    margin: 0 auto; 
+    object-fit: cover; 
+}
+
 .top-nav a:hover{
     text-decoration:none;
     margin-right: 30px;
