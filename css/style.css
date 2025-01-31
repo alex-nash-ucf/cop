@@ -445,7 +445,7 @@ body{
     padding: 10px 40px; 
     border: 2px solid #ccc;
     border-radius: 5px;
-    background: url('assets/searchicon.png') no-repeat 10px center;
+    background: url('/images/searchicon.png') no-repeat 10px center;
     background-size: 20px 20px;
     outline: none;
     font-size: 16px;

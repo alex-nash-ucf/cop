@@ -1,5 +1,4 @@
-//const { json } = require("react-router-dom");
-const urlBase = 'http://157.230.221.117/LAMPAPI'
+const urlBase = 'http://coptest1.xyz/LAMPAPI'
 const extension= 'php'; 
 
 let userId= 0;
@@ -49,7 +48,9 @@ function doLogin()
             if(this.readyState== 4 && this.status==200){
                 console.log(xhr.responseText); //log response
                 let jsonObject= JSON.parse(xhr.responseText);
+    
                 userId=jsonObject.id;
+                console.log("user"+userId);
 
                 if(userId <1){
                     document.getElementById("loginResult").innerHTML = "User / Password combination is incorrect";
@@ -57,9 +58,13 @@ function doLogin()
                 }
                 firstName= jsonObject.firstName;
                 lastName= jsonObject.lastName;
+                console.log("first"+firstName);
 
-                saveCookies();
-                console.log("log in successful");
+                console.log("last"+lastName);
+
+
+                saveCookie();
+                console.log("Login successful with userId:", userId);
                 window.location.href = "loggedIn.html";
             }
         };
@@ -216,16 +221,73 @@ function validatePhoneNumber(phone){
 }
 
 
+//cookies!
+
+function saveCookie()
+{
+	let minutes = 20;
+	let date = new Date();
+	date.setTime(date.getTime()+(minutes*60*1000));	
+    //let expires = "expires=" + date.toGMTString();
+
+    console.log("cookie userId: " + userId);
+    console.log("cookie first: " + firstName);
+    console.log("cookie last: " + lastName);
+
+	document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId + ";expires=" + date.toGMTString();
+    console.log("Saved Cookie: " + document.cookie);
+
+}
+
+function readCookie()
+{
+    console.log("before read cookie userid"+userId);
+
+	userId = -1;
+	let data = document.cookie;
+	let splits = data.split(",");
+	for(var i = 0; i < splits.length; i++) 
+	{
+		let thisOne = splits[i].trim();
+		let tokens = thisOne.split("=");
+		if( tokens[0] == "firstName" )
+		{
+			firstName = tokens[1];
+		}
+		else if( tokens[0] == "lastName" )
+		{
+			lastName = tokens[1];
+		}
+		else if( tokens[0] == "userId" )
+		{
+			userId = parseInt( tokens[1].trim() );
+		}
+        console.log("after read cookie userid"+userId);
+
+	}
+	
+	if( userId < 0 )
+	{
+		window.location.href = "index.html";
+	}
+	else
+	{
+		document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
+	}
+}
+
 
 function addContact(){
 
     console.log("add contact clicked");
 
+    //test
+   //readCookie();
 
     let newFirstName= document.getElementById("contactFirst").value;
     let newLastName= document.getElementById("contactLast").value;
     let newEmail=document.getElementById('contactEmail').value;
-    let newPhone= document.getElementById('contactNumber').value;
+    let phoneNumber= document.getElementById('contactNumber').value;
 
     let emailError= document.getElementById('emailError');
     let phoneError= document.getElementById('phoneError');
@@ -234,7 +296,9 @@ function addContact(){
     console.log("First Name:", newFirstName);
     console.log("Last Name:", newLastName);
     console.log("Email:", newEmail);
-    console.log("Phone:", newPhone);
+    console.log("Phone:", phoneNumber);
+    console.log("User ID:", userId);
+
 
     emailError.textContent = "";
     phoneError.textContent = "";
@@ -242,18 +306,21 @@ function addContact(){
 
     let isValid = true;
 
-    if(!newFirstName || !newLastName || !newEmail || !newPhone){
+    if(!newFirstName || !newLastName || !newEmail || !phoneNumber){
         formError.textContent = "Fill in all fields.";
         isValid = false;
+        return;
     }
 
     if(!validateEmail(newEmail)){
         emailError.textContent = "Invalid email address.";
         isValid = false;
+        return;
     }
-    if(!validatePhoneNumber(newPhone)){
+    if(!validatePhoneNumber(phoneNumber)){
         phoneError.textContent = "Invalid phone number.";
         isValid = false;
+        return;
     }
 
     if(!isValid){
@@ -264,7 +331,8 @@ function addContact(){
         firstName: newFirstName,
         lastName: newLastName,
         email: newEmail,
-        phone: newPhone
+        phoneNumber: phoneNumber,
+        userId: userId
     };
 
     let jsonPayload= JSON.stringify(tmp);
@@ -277,6 +345,8 @@ function addContact(){
     try{
         xhr.onreadystatechange= function(){
             if(this.readyState === 4 && this.status=== 200){
+                console.log("added contact");    
+
                 document.getElementById('addMe').reset();
                 loadContact();
             }
@@ -303,9 +373,11 @@ function loadContact(){
     };
     let jsonPayload= JSON.stringify(tmp);
 
+    //let url=urlBase +'/AddContacts.'+ extension;
 
     let xhr= new XMLHttpRequest();
     xhr.open("POST", url, true);
+
     xhr.setRequestHeader("Content-type", "application/json; charset-UTF-8");
     try{
         xhr.onreadystatechange= function(){
@@ -529,39 +601,4 @@ function search(){
 		document.getElementById("contactSearchResult").innerHTML = err.message;
 	}
 	
-}
-
-//cookies!
-
-function saveCookies(){
-    console.log("cookies saved! yum");
-
-    let minutes= 20;
-    let date= new Date();
-    date.setTime(date.getTime()+(minutes*60*1000));
-    document.cookie= "firstName=" + firstName + ",lastName=" +lastName+ ",userId="+ userId+ ";expires="+ date.toGMTString();
-}
-
-function readCookie(){
-    userId= -1;
-    let data= document.cookie;
-    let splits= data.split("=");
-    for(var i=0; i<splits.length; i++){
-        let thisOne= splits[i].trim();
-        let tokens= thisOne.split("=");
-
-        if(tokens[0]== "firstName"){
-            firstName= tokens[1];
-        }else if(tokens[0]== "lastName"){
-            lastName=tokens[1];
-        }else if(tokens[0]=='userId'){
-            userId= parseInt(tokens[1].trim());
-        }
-    }
-
-    if(userId<0){
-        window.location.href= "index.html";
-    }else{
-        document.getElementById("userName").innerHTML= "Logged in as" +firstName+ " "+lastName;
-    }
 }
