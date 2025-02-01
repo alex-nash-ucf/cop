@@ -264,6 +264,7 @@ function readCookie()
 			userId = parseInt( tokens[1].trim() );
 		}
         console.log("after read cookie userid"+userId);
+        loadContact();
 
 	}
 	
@@ -384,9 +385,11 @@ function loadContact(){
         xhr.onreadystatechange= function(){
             if(this.readyState === 4 && this.status=== 200){
                 let jsonObject= JSON.parse(xhr.responseText);
+                let contactsGrid= document.querySelector(".contacts-grid");
+                contactsGrid.innerHTML= "";
 
                 if(!jsonObject.results || jsonObject.results.length === 0){
-                    console.log("No contacts found/Error");
+                    console.log("No contacts found");
                     return;
                 }
 
@@ -397,15 +400,26 @@ function loadContact(){
                     let lastName = jsonObject.results[i].LastName;
                     let phone = jsonObject.results[i].Phone;
 
+                    console.log(`  Name: ${firstName} ${lastName}`);
+                    console.log(`  Email: ${email}`);
+                    console.log(`  Phone: ${phone}`);
+                    console.log("----------------------");
+                    
+                    if (!jsonObject.results || jsonObject.results.length === 0){
+                        contactsGrid.innerHTML = "<p>No contacts found.</p>";
+                        return;
+                    }
 
-                    const contactCard=document.createElement('div');
+                    //contact card
+                    const contactCard= document.createElement('div');
                     contactCard.classList.add('addcontacts');
 
+                    //pfp
                     const pfpDiv= document.createElement('div');
                     pfpDiv.classList.add('pfp');
                     const pfpImg= document.createElement('img');
                     pfpImg.classList.add('pfpimg');
-                    pfpImg.src ='images/pfp.png';
+                    pfpImg.src= 'images/pfp.png';
                     pfpImg.alt= 'Profile Picture';
 
                     const initialsDiv= document.createElement('div');
@@ -415,10 +429,12 @@ function loadContact(){
                     pfpDiv.appendChild(pfpImg);
                     pfpDiv.appendChild(initialsDiv);
 
+                    //info
                     const contactDetails= document.createElement('div');
+                    contactDetails.classList.add('contact-details');
 
-                    const formattedFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-                    const formattedLastName = lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase();
+                    const formattedFirstName= firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+                    const formattedLastName= lastName.charAt(0).toUpperCase() +lastName.slice(1).toLowerCase();
 
                     contactDetails.innerHTML= `
                         <h3>${formattedFirstName} ${formattedLastName}</h3>
@@ -426,26 +442,27 @@ function loadContact(){
                         <p>${formatPhoneNumber(phone)}</p>
                     `;
 
-                    //edit and delete
+                    //buttons
                     const buttonsDiv= document.createElement('div');
                     buttonsDiv.classList.add('buttons');
 
-                    const editButton= document.createElement('button');
+                    const editButton = document.createElement('button');
                     editButton.classList.add('edit-btn');
-                    editButton.innerHTML= '<img src="images/edit.png" alt="edit" class="button-img" />'; 
-                    editButton.addEventListener('click', () => editContact(editButton));
+                    editButton.innerHTML = '<img src="images/edit.png" alt="edit" class="button-img" />'; 
+                    editButton.addEventListener('click', () => editContact(contactCard, contactDetails, editButton, saveButton));
 
-                    const deleteButton =document.createElement('button');
+                    const deleteButton = document.createElement('button');
                     deleteButton.classList.add('delete-btn');
-                    deleteButton.innerHTML= '<img src="images/delete.png" alt="delete" class="button-img" />';
+                    deleteButton.innerHTML = '<img src="images/delete.png" alt="delete" class="button-img" />';
                     deleteButton.addEventListener('click', () => deleteContact(contactCard));
 
                     const saveButton = document.createElement("button");
                     saveButton.classList.add("save-btn");
                     saveButton.innerHTML = '<img src="images/save.png" alt="save" class="button-img" />';
-                    saveButton.style.display = "none"; // Initially hidden
+                    saveButton.style.display = "none";
                     saveButton.addEventListener("click", () => saveEditedContact(contactCard, contactDetails, editButton, saveButton));
-                    
+
+                    //apend
                     buttonsDiv.appendChild(saveButton);
                     buttonsDiv.appendChild(editButton);
                     buttonsDiv.appendChild(deleteButton);
@@ -453,18 +470,18 @@ function loadContact(){
                     contactCard.appendChild(pfpDiv);
                     contactCard.appendChild(contactDetails);
                     contactCard.appendChild(buttonsDiv);
-                
-                    document.querySelector('.contacts-grid').appendChild(contactCard);
 
+                    contactsGrid.appendChild(contactCard);
                 }
             }
         };
-        xhr.send(jsonPayload);
-    }catch(err){
-        document.getElementById().innerHTML=err.message;
-    }
 
+        xhr.send(jsonPayload);
+    } catch (err) {
+        console.error("Error loading contacts:", err.message);
+    }
 }
+
 
 function doLogout(){
     userId= 0;
@@ -477,30 +494,36 @@ function doLogout(){
 function deleteContact(){
     console.log("delete contact clicked");
 
+    const confirmation = window.confirm(`Are you sure you want to delete ${firstName} ${lastName} from your contacts?`);
 
-    let tmp={
-        userId: userId, deleteContactId: contactId
-    }        
+    if(confirmation){
+        let tmp={
+            userId: userId, deleteContactId: contactId
+        }        
+    
+        let jsonPayload= JSON.stringify(tmp);
+    
+        let url= urlBase + '/DeleteContacts.'+ extension;
+    
+        let xhr= new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    
+        try{
+            xhr.onreadystatechange= function(){
+                if (this.readyState == 4 && this.status == 200){
+                    loadContact();
+                }
+    
+            };
+            xhr.send(jsonPayload);
+    
+        }catch(err){
+            console.log(err.message);
+        }
 
-    let jsonPayload= JSON.stringify(tmp);
-
-    let url= urlBase + '/DeleteContacts.'+ extension;
-
-    let xhr= new XMLHttpRequest();
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-
-    try{
-        xhr.onreadystatechange= function(){
-            if (this.readyState == 4 && this.status == 200){
-                loadContact();
-            }
-
-        };
-        xhr.send(jsonPayload);
-
-    }catch(err){
-        console.log(err.message);
+    }else{
+        console.log("Contact deletion canceled");
     }
 
 }
