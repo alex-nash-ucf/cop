@@ -589,9 +589,6 @@ function saveContact(contactFirst1, contactLast1, contactEmail1, contactNumber1,
 
 }
 
-function cancelContact(){
-    console.log("cancel contact clicked");
-}
 
 function editContact(contactCard, contactDetails, editButton, saveButton, deleteButton, id){
     console.log("edit contact clicked");
@@ -632,9 +629,12 @@ function editContact(contactCard, contactDetails, editButton, saveButton, delete
             <span id="phoneError" class="error-message"></span>
             <span id="formError" class="error-message"></span>
             <button id="saveContactbtn" type="button" class="savebut" onclick="saveContact(contactFirst1, contactLast1, contactEmail1, contactNumber1, ${id1});"> Save</button>
-            <button id="cancelContactbtn" type="button" class="cancelbut" onclick="cancelContact();"> Cancel</button>
+            <button id="cancelContactbtn" type="button" class="cancelbut" onclick="loadContact();"> Cancel</button>
         </form>
     `;
+
+    const cancelButton= document.getElementById('cancelContactbtn');
+    cancelButton.addEventListener('click', cancelContact);
 }
 
 function search(){
