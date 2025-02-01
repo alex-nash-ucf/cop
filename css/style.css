@@ -507,13 +507,13 @@ body{
 
 .pfpimg{
     width:100px;
-    padding-right: 25px;
+    padding-right: 20px;
 }
 
 .addcontacts{
     margin-top: 25px;
     margin-left: 45px;
-    padding: 25px;
+    padding: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -540,7 +540,7 @@ body{
     align-items: center;
     justify-content: center;
     position: absolute;
-    transform: translate(-30%, -90%); 
+    transform: translate(-33.5%, -92%); 
     font-size: 24px;
     color: Black; 
     text-align: center;
@@ -575,7 +575,7 @@ body{
     font-size:30px;
 }
 
-#contactFirst, #contactLast {
+#contactFirst, #contactLast, #contactFirst1, #contactLast1 {
     box-sizing: border-box; 
     width:110px;
 
@@ -592,7 +592,7 @@ body{
 
 
 
-@media screen and (max-width: 1000px){
+@media screen and (max-width: 1300px){
     #home .about, #home .login, #home .signup{
         display: none; 
     }
@@ -640,22 +640,26 @@ body{
     gap: 5px;       
 }
 
-.edit-btn, .delete-btn, .save-btn{
+.edit-btn, .delete-btn, .save-btn, .savebut{
     border:1px dashed black;
     border-radius: 5px;
     
 }
-.edit-btn:hover, .delete-btn:hover, .save-btn:hover{
+.edit-btn:hover, .delete-btn:hover, .save-btn:hover, .savebut:hover{
     box-shadow:0px 4px 8px rgba(0, 0, 0, 0.3);    
 }
 
 
-.addbut, .cancelbut{
+.addbut, .cancelbut, .savebut{
     border:1px dashed black;
     border-radius: 5px;
     cursor: pointer;
 }
-.addbut:hover, .cancelbut:hover{
+.addbut:hover, .cancelbut:hover, .savebut:hover{
     box-shadow:0px 4px 8px rgba(0, 0, 0, 0.3);    
 
+}
+
+.savebut, .cancelbut{
+    margin-top:7px;
 }

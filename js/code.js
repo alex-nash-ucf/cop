@@ -264,9 +264,8 @@ function readCookie()
 			userId = parseInt( tokens[1].trim() );
 		}
         console.log("after read cookie userid"+userId);
-        loadContact();
-
 	}
+    loadContact();
 	
 	if( userId < 0 )
 	{
@@ -393,17 +392,26 @@ function loadContact(){
                     return;
                 }
 
+                //alphabetical
+                jsonObject.results.sort((a, b)=>{
+                    let fullNameA = (a.FirstName + " " + a.LastName).toLowerCase();
+                    let fullNameB = (b.FirstName + " " + b.LastName).toLowerCase();
+                    return fullNameA.localeCompare(fullNameB);
+                });
+
 
                 for(let i=0;i<jsonObject.results.length;i++){
                     let email = jsonObject.results[i].Email;
                     let firstName = jsonObject.results[i].FirstName;
                     let lastName = jsonObject.results[i].LastName;
                     let phone = jsonObject.results[i].Phone;
+                    let id= jsonObject.results[i].ID;
 
                     console.log(`  Name: ${firstName} ${lastName}`);
                     console.log(`  Email: ${email}`);
                     console.log(`  Phone: ${phone}`);
-                    console.log("----------------------");
+                    console.log(`  id: ${id}`);
+                    console.log("-----------");
                     
                     if (!jsonObject.results || jsonObject.results.length === 0){
                         contactsGrid.innerHTML = "<p>No contacts found.</p>";
@@ -441,7 +449,7 @@ function loadContact(){
                         <p>${email}</p>
                         <p>${formatPhoneNumber(phone)}</p>
                     `;
-
+                
                     //buttons
                     const buttonsDiv= document.createElement('div');
                     buttonsDiv.classList.add('buttons');
@@ -449,12 +457,12 @@ function loadContact(){
                     const editButton = document.createElement('button');
                     editButton.classList.add('edit-btn');
                     editButton.innerHTML = '<img src="images/edit.png" alt="edit" class="button-img" />'; 
-                    editButton.addEventListener('click', () => editContact(contactCard, contactDetails, editButton, saveButton));
-
+                    editButton.addEventListener('click', () => editContact(contactCard, contactDetails, editButton, saveButton, deleteButton, id));
+                    
                     const deleteButton = document.createElement('button');
                     deleteButton.classList.add('delete-btn');
                     deleteButton.innerHTML = '<img src="images/delete.png" alt="delete" class="button-img" />';
-                    deleteButton.addEventListener('click', () => deleteContact(contactCard));
+                    deleteButton.addEventListener('click', () => deleteContact(contactCard,firstName,lastName));
 
                     const saveButton = document.createElement("button");
                     saveButton.classList.add("save-btn");
@@ -491,14 +499,18 @@ function doLogout(){
     window.location.href= "index.html"; 
 }
 
-function deleteContact(){
+function deleteContact(contactCard, firstName, lastName){
     console.log("delete contact clicked");
 
-    const confirmation = window.confirm(`Are you sure you want to delete ${firstName} ${lastName} from your contacts?`);
+
+    const confirmation = window.confirm(`Are you sure you want to delete ${firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase()} ${lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase()} from your contacts?`);
 
     if(confirmation){
+
         let tmp={
-            userId: userId, deleteContactId: contactId
+            firstName: firstName,
+            lastName: lastName,
+            userId: userId
         }        
     
         let jsonPayload= JSON.stringify(tmp);
@@ -528,51 +540,35 @@ function deleteContact(){
 
 }
 
-function editContact(contactId) {
-    console.log("edit contact clicked");
-
-    editButton.style.display = "none";
-    const saveButton = editButton.parentNode.querySelector('.save-btn');
-    saveButton.style.display = "inline";
-
-    var cfirstName= document.getElementById("contactFirst");
-    var clastName= document.getElementById("contactLast");
-    var cemail= document.getElementById("contactEmail");
-    var cnum= document.getElementById("contactNumber");
-
-    var firstNameData= firstNameEl.innerText;
-    var lastNameData= lastNameEl.innerText;
-    var emailData= emailEl.innerText;
-    var phoneData= phoneEl.innerText;
-
-
-    cfirstName.innerHTML= `<input type='text' id='firstNameInput${id}' value='${firstNameData}' class='edit-input'>`;
-    clastName.innerHTML= `<input type='text' id='lastNameInput${id}' value='${lastNameData}' class='edit-input'>`;
-    cemail.innerHTML= `<input type='text' id='emailInput${id}' value='${emailData}' class='edit-input'>`;
-    cnum.innerHTML= `<input type='text' id='phoneInput${id}' value='${phoneData}' class='edit-input'>`;
-
-}
-
-function saveContact(){
+function saveContact(contactFirst1, contactLast1, contactEmail1, contactNumber1, id){
     console.log("save contact clicked");
 
-    var updatedFirstName= document.getElementById("firstNameInput").value;
-    var updatedLastName= document.getElementById("lastNameInput").value;
-    var updatedEmail= document.getElementById("emailInput").value;
-    var updatedPhone= document.getElementById("phoneInput").value;
+    var updatedFirstName= document.getElementById("contactFirst1").value;
+    var updatedLastName= document.getElementById("contactLast1").value;
+    var updatedEmail= document.getElementById("contactEmail1").value;
+    var updatedPhone= document.getElementById("contactNumber1").value;
+
+    console.log("After Edit:");
+    console.log(`  Name: ${updatedFirstName} ${updatedLastName}`);
+    console.log(`  Email: ${updatedEmail}`);
+    console.log(`  Phone: ${updatedPhone}`);
+    console.log("ID being sent:", id);
 
 
     let tmp={
-        phoneNum: updatedPhone,
-        newEmail: updatedEmail,
-        newFirst: updatedFirstName,
-        newLast: updatedLastName,
-        userId: userId
+        firstName: updatedFirstName,
+        lastName: updatedLastName,
+        email: updatedEmail,
+        phoneNumber: updatedPhone,
+        ID: id
     };
+
+    console.log("Data being sent to server:", tmp);
+
 
     let jsonPayload= JSON.stringify(tmp);
 
-    let url= urlBase + '/saveContact.'+ extension;
+    let url= urlBase + '/UpdateContacts.'+ extension;
 
     let xhr= new XMLHttpRequest();
     xhr.open("POST", url, true);
@@ -582,6 +578,7 @@ function saveContact(){
         xhr.onreadystatechange= function(){
             if (this.readyState == 4 && this.status == 200){
                 loadContact();
+                console.log("Updated contact");
             }
         };
         xhr.send(jsonPayload);
@@ -592,7 +589,53 @@ function saveContact(){
 
 }
 
+function cancelContact(){
+    console.log("cancel contact clicked");
+}
 
+function editContact(contactCard, contactDetails, editButton, saveButton, deleteButton, id){
+    console.log("edit contact clicked");
+
+    editButton.style.display = "none";
+    deleteButton.style.display = "none";
+    saveButton.style.display = "none";
+
+    const firstName = contactDetails.querySelector('h3').innerText.split(' ')[0]; 
+    const lastName = contactDetails.querySelector('h3').innerText.split(' ')[1];
+    const email= contactDetails.querySelector('p:nth-of-type(1)').innerText;
+    const phone= contactDetails.querySelector('p:nth-of-type(2)').innerText;
+    const id1= id;
+
+
+    console.log("Before Edit:");
+    console.log(`  Name: ${firstName} ${lastName}`);
+    console.log(`  Email: ${email}`);
+    console.log(`  Phone: ${phone}`);
+    console.log(`  id: ${id1}`);
+
+    const originalDetails={
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: phone,
+    };
+
+    contactDetails.innerHTML = `
+        <form class="addform" id="editContactForm" action="" method="post">
+            <div class="inputrow">
+                <input id="contactFirst1" type="text" value="${firstName}" placeholder="First Name" required>
+                <input id="contactLast1" type="text" value="${lastName}" placeholder="Last Name" required>
+            </div>
+            <input id="contactEmail1" type="text" value="${email}"placeholder="example@email.com" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"required>
+            <span id="emailError" class="error-message"></span>
+            <input id="contactNumber1" type="text" value="${phone}" placeholder="XXX-XXX-XXXX" required pattern="^[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4}$">
+            <span id="phoneError" class="error-message"></span>
+            <span id="formError" class="error-message"></span>
+            <button id="saveContactbtn" type="button" class="savebut" onclick="saveContact(contactFirst1, contactLast1, contactEmail1, contactNumber1, ${id1});"> Save</button>
+            <button id="cancelContactbtn" type="button" class="cancelbut" onclick="cancelContact();"> Cancel</button>
+        </form>
+    `;
+}
 
 function search(){
     console.log("search clicked");
@@ -600,7 +643,13 @@ function search(){
     let srch = document.getElementById("searchText").value;
 	document.getElementById("contactSearchResult").innerHTML = "";
 	
-	let contactList = "";
+    let contactsGrid = document.querySelector(".contacts-grid");
+    contactsGrid.innerHTML= "";
+
+    if(srch=== ""){
+        loadContact();
+        return;
+    }
 
 	let tmp = {search:srch,userId:userId};
 	let jsonPayload = JSON.stringify( tmp );
@@ -616,19 +665,96 @@ function search(){
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				document.getElementById("contactSearchResult").innerHTML = "Contact(s) has been retrieved";
+				document.getElementById("contactSearchResult").innerHTML = "";
 				let jsonObject = JSON.parse( xhr.responseText );
-				
-				for( let i=0; i<jsonObject.results.length; i++ )
+
+                if (!jsonObject.results || jsonObject.results.length === 0) {
+                    contactsGrid.innerHTML = "<p>No contacts found.</p>";
+                    return;
+                }
+
+				const filteredResults= jsonObject.results.filter(contact => {
+                    const fullName= (contact.FirstName + " " + contact.LastName).toLowerCase();
+                    return fullName.includes(srch.toLowerCase());
+                });
+
+                filteredResults.sort((a, b)=>{
+                    let fullNameA= (a.FirstName + " " + a.LastName).toLowerCase();
+                    let fullNameB= (b.FirstName + " " + b.LastName).toLowerCase();
+                    return fullNameA.localeCompare(fullNameB);
+                });
+
+				for(let i=0; i<filteredResults.length; i++)
 				{
-					contactList += jsonObject.results[i];
-					if( i < jsonObject.results.length - 1 )
-					{
-						contactList += "<br />\r\n";
-					}
+                    let contact= filteredResults[i];
+                    let email= contact.Email;
+                    let firstName= contact.FirstName;
+                    let lastName= contact.LastName;
+                    let phone= contact.Phone;
+
+                    //contact card
+                    const contactCard= document.createElement('div');
+                    contactCard.classList.add('addcontacts');
+
+                    //pfp
+                    const pfpDiv= document.createElement('div');
+                    pfpDiv.classList.add('pfp');
+                    const pfpImg= document.createElement('img');
+                    pfpImg.classList.add('pfpimg');
+                    pfpImg.src= 'images/pfp.png';
+                    pfpImg.alt= 'Profile Picture';
+
+                    const initialsDiv= document.createElement('div');
+                    initialsDiv.classList.add('initial');
+                    initialsDiv.textContent= `${firstName[0].toUpperCase()}${lastName[0].toUpperCase()}`;
+
+                    pfpDiv.appendChild(pfpImg);
+                    pfpDiv.appendChild(initialsDiv);
+
+                    //info
+                    const contactDetails= document.createElement('div');
+                    contactDetails.classList.add('contact-details');
+
+                    const formattedFirstName= firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+                    const formattedLastName= lastName.charAt(0).toUpperCase() +lastName.slice(1).toLowerCase();
+
+                    contactDetails.innerHTML= `
+                        <h3>${formattedFirstName} ${formattedLastName}</h3>
+                        <p>${email}</p>
+                        <p>${formatPhoneNumber(phone)}</p>
+                    `;
+                
+                    //buttons
+                    const buttonsDiv= document.createElement('div');
+                    buttonsDiv.classList.add('buttons');
+
+                    const editButton = document.createElement('button');
+                    editButton.classList.add('edit-btn');
+                    editButton.innerHTML = '<img src="images/edit.png" alt="edit" class="button-img" />'; 
+                    editButton.addEventListener('click', () => editContact(contactCard, contactDetails, editButton, saveButton));
+                    
+                    const deleteButton = document.createElement('button');
+                    deleteButton.classList.add('delete-btn');
+                    deleteButton.innerHTML = '<img src="images/delete.png" alt="delete" class="button-img" />';
+                    deleteButton.addEventListener('click', () => deleteContact(contactCard,firstName,lastName));
+
+                    const saveButton = document.createElement("button");
+                    saveButton.classList.add("save-btn");
+                    saveButton.innerHTML = '<img src="images/save.png" alt="save" class="button-img" />';
+                    saveButton.style.display = "none";
+                    saveButton.addEventListener("click", () => saveEditedContact(contactCard, contactDetails, editButton, saveButton));
+
+                    //apend
+                    buttonsDiv.appendChild(saveButton);
+                    buttonsDiv.appendChild(editButton);
+                    buttonsDiv.appendChild(deleteButton);
+
+                    contactCard.appendChild(pfpDiv);
+                    contactCard.appendChild(contactDetails);
+                    contactCard.appendChild(buttonsDiv);
+                    contactsGrid.appendChild(contactCard);
 				}
 				
-				document.getElementsByTagName("p")[0].innerHTML = contactList;
 			}
 		};
 		xhr.send(jsonPayload);
