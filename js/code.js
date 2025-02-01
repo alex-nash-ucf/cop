@@ -205,6 +205,7 @@ function hidePasswordRequirements(){
     document.getElementById('passwordReq').style.display= 'none';
 }
 
+
 function validateEmail(email){
     const ret = String(email)
         .toLowerCase()
@@ -373,17 +374,30 @@ function loadContact(){
     };
     let jsonPayload= JSON.stringify(tmp);
 
-    //let url=urlBase +'/AddContacts.'+ extension;
-
+    let url=urlBase +'/SearchContacts.'+ extension;
     let xhr= new XMLHttpRequest();
     xhr.open("POST", url, true);
 
     xhr.setRequestHeader("Content-type", "application/json; charset-UTF-8");
+
     try{
         xhr.onreadystatechange= function(){
             if(this.readyState === 4 && this.status=== 200){
                 let jsonObject= JSON.parse(xhr.responseText);
+
+                if(!jsonObject.results || jsonObject.results.length === 0){
+                    console.log("No contacts found/Error");
+                    return;
+                }
+
+
                 for(let i=0;i<jsonObject.results.length;i++){
+                    let email = jsonObject.results[i].Email;
+                    let firstName = jsonObject.results[i].FirstName;
+                    let lastName = jsonObject.results[i].LastName;
+                    let phone = jsonObject.results[i].Phone;
+
+
                     const contactCard=document.createElement('div');
                     contactCard.classList.add('addcontacts');
 

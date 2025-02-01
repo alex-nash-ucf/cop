@@ -1,8 +1,9 @@
 @font-face{
     font-family:'Pokemon';
     src: url('fonts/PokemonFont.ttf') format('truetype');
+    font-display: swap;
 }
-
+  
 
 body{
     margin: 0;
