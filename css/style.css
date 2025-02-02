@@ -281,7 +281,7 @@ body{
 }
 
 .submitbtn{
-    background-color: #EE1515;
+    background-color: #B30000;
     color: white;  
     margin-top: 15px;    
     margin-bottom:10px;        
@@ -614,7 +614,13 @@ body{
     .contacts-grid{
         grid-template-columns: repeat(1, 1fr);
     }
-    
+
+    .addcontacts{
+        width: 325px;
+    }
+    .add-button{
+        margin-left:-10px;
+    }
 }
 
 .error-message{
